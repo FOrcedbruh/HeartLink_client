@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    #root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        main.main {
+            width: 100%;
+            min-height: 100vh;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
