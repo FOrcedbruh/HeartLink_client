@@ -1,0 +1,9 @@
+@mixin primary_gradient__color {
+    background: rgb(0,121,87);
+    background: -moz-linear-gradient(90deg, rgba(0,121,87,1) 0%, rgba(9,9,121,1) 50%, rgba(87,0,163,1) 89%);
+    background: -webkit-linear-gradient(90deg, rgba(0,121,87,1) 0%, rgba(9,9,121,1) 50%, rgba(87,0,163,1) 89%);
+    background: linear-gradient(90deg, rgba(0,121,87,1) 0%, rgba(9,9,121,1) 50%, rgba(87,0,163,1) 89%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#007957",endColorstr="#5700a3",GradientType=1);
+}
+
+$bg_color: #eee;

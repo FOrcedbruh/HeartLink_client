@@ -1,3 +1,5 @@
+@import './mixins/mixins';
+
 * {
     box-sizing: border-box;
 }
@@ -10,6 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $bg_color;
     #root {
         display: flex;
         justify-content: center;
