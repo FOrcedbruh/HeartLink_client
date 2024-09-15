@@ -1,0 +1,64 @@
+.window {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .container {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        height: fit-content;
+        min-height: 60vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer {
+        width: 100%;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+    }
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .logo {
+        h2 {
+            position: relative;
+            top: 50%;  
+            width: 24em;
+            margin: 0 auto;
+            border-right: 2px solid rgba(255,255,255,.75);
+            font-size: 180%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            transform: translateY(-50%);    
+        }
+    }
+}
+
+
+.anim_typewriter{
+  animation: typewriter 1s steps(10) 1s 1 normal both,
+             blinkTextCursor 700ms steps(10) infinite normal;
+}
+@keyframes typewriter{
+  from {width: 0;}
+  to {width: 6em;}
+}
+@keyframes blinkTextCursor{
+  from {border-right-color: #8576FF;}
+  to {border-right-color: transparent;}
+}
