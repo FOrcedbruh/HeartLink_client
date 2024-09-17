@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/App';
 import "./global.scss"
 import { AuthContextProvider } from './api/auth/authContext';
-
+import Notification from './app/components/Notification/Notification';
 
 const rootEl = document.getElementById('root');
 if (rootEl) {
@@ -12,11 +12,13 @@ if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
     <React.StrictMode>
-      <BrowserRouter>
-        <AuthContextProvider>
-          <App />
-        </AuthContextProvider>
-      </BrowserRouter>
+      <Notification>
+        <BrowserRouter>
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
+        </BrowserRouter>
+      </Notification>
     </React.StrictMode>,
   );
 }

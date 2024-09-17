@@ -2,6 +2,7 @@ import styles from './Auth.module.scss'
 import { useForm } from 'react-hook-form';
 import { Button } from '../Button/Button';
 import { AHandlers } from '../../../api/auth/handlers';
+import { useMessage } from '../../zustand/useMessage';
 
 
 interface FormStateType {
@@ -10,6 +11,8 @@ interface FormStateType {
 }
 
 const Login: React.FC = () => {
+
+    const { setMessage } = useMessage()
 
     const {
         handleSubmit,
@@ -24,6 +27,8 @@ const Login: React.FC = () => {
             mode: "onChange"
         }
     )
+
+    
 
     const onSubmit = async (data: FormStateType) => {
         const res = await AHandlers.login(data.email, data.password)

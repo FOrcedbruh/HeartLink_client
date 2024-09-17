@@ -1,6 +1,7 @@
 import styles from './Auth.module.scss'
 import { Button } from '../Button/Button';
 import { useForm } from 'react-hook-form';
+import { AHandlers } from '../../../api/auth/handlers';
 
 
 interface FormStateType {
@@ -32,7 +33,7 @@ const Reg: React.FC = () => {
 
     
 
-    const onSubmit = (data: FormStateType) => {
+    const onSubmit = async (data: FormStateType) => {
         
         if (data.password != data.confirmPass) {
             setError("confirmPass", {
@@ -40,7 +41,9 @@ const Reg: React.FC = () => {
             })
             return
         }
-        console.log(data)
+
+        const res = await AHandlers.registration(data.username, data.email, data.password)
+        console.log(res)
         reset()
     }
 
