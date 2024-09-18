@@ -2,6 +2,12 @@ import styles from './Auth.module.scss'
 import { Button } from '../Button/Button';
 import { useForm } from 'react-hook-form';
 import { AHandlers } from '../../../api/auth/handlers';
+import eye from './../../../icons/eye.svg';
+import closeEye from './../../../icons/closeEye.svg';
+import { useState } from 'react';
+import { useMessage } from '../../zustand/useMessage';
+import { useNavigate } from 'react-router-dom';
+
 
 
 interface FormStateType {
@@ -15,6 +21,13 @@ interface FormStateType {
 
 const Reg: React.FC = () => {
 
+
+
+    const [view, setView] = useState<Boolean>(false)
+
+    const { setMessage } = useMessage()
+
+    const navigate = useNavigate()
 
     const {
         handleSubmit,
@@ -43,7 +56,14 @@ const Reg: React.FC = () => {
         }
 
         const res = await AHandlers.registration(data.username, data.email, data.password)
-        console.log(res)
+        if (res.access_token) {
+            //@ts-ignore
+            setAuthUser(res.access_token)
+            localStorage.setItem("auser", JSON.stringify(res))
+            navigate("/me")
+        } else {
+            setMessage(res)
+        }
         reset()
     }
 
@@ -75,8 +95,8 @@ const Reg: React.FC = () => {
                     {errors.email && <p className={styles.error}>{errors.email.message}</p>}
                 </div>
                 <div>
-                    <label htmlFor="password">Придумайте пароль</label>
-                    <input type="password" placeholder='123...' {...register("password", {
+                    <label htmlFor="password" onClick={() => setView(!view)}>Придумайте пароль <img src={view ? eye : closeEye} width={24} height={24} alt="" /></label>
+                    <input type={view ? "text" : "password"} placeholder='123...' {...register("password", {
                         required: "Придумайте пароль",
                         minLength: {
                             value: 6,
@@ -86,7 +106,7 @@ const Reg: React.FC = () => {
                     {errors.password && <p className={styles.error}>{errors.password.message}</p>}
                 </div>
                 <div>
-                    <label htmlFor="confirmPass">Введите пароль еще раз</label>
+                    <label htmlFor="confirmPass" >Введите пароль еще раз</label>
                     <input type="password" {...register("confirmPass", {
                         required: "Повторите придуманный пароль"
                     })}/>

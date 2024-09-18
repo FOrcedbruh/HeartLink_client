@@ -3,6 +3,11 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../Button/Button';
 import { AHandlers } from '../../../api/auth/handlers';
 import { useMessage } from '../../zustand/useMessage';
+import eye from './../../../icons/eye.svg';
+import closeEye from './../../../icons/closeEye.svg';
+import { useState } from 'react';
+import { useAuthContext } from '../../../api/auth/authContext';
+import { useNavigate } from 'react-router-dom';
 
 
 interface FormStateType {
@@ -13,6 +18,11 @@ interface FormStateType {
 const Login: React.FC = () => {
 
     const { setMessage } = useMessage()
+    const { setAuthUser } = useAuthContext()
+
+    const navigate = useNavigate()
+
+    const [view, setView] = useState<Boolean>(false)
 
     const {
         handleSubmit,
@@ -32,7 +42,14 @@ const Login: React.FC = () => {
 
     const onSubmit = async (data: FormStateType) => {
         const res = await AHandlers.login(data.email, data.password)
-        console.log(res)
+        if (res.access_token) {
+            //@ts-ignore
+            setAuthUser(res.access_token)
+            localStorage.setItem("auser", JSON.stringify(res))
+            navigate("/me")
+        } else {
+            setMessage(res)
+        }
         reset()
     }
 
@@ -53,8 +70,8 @@ const Login: React.FC = () => {
                     {errors.email && <p className={styles.error}>{errors.email.message}</p>}
                 </div>
                 <div>
-                    <label htmlFor="password">Пароль</label>
-                    <input type="password" placeholder='123...' {...register("password", {
+                    <label htmlFor="password" onClick={() => setView(!view)}>Пароль <img src={view ? eye : closeEye} width={24} height={24} alt="" /></label>
+                    <input type={view ? "text" : "password"} placeholder='123...' {...register("password", {
                         required: "Придумайте пароль",
                         minLength: {
                             value: 6,

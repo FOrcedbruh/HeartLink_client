@@ -5,21 +5,34 @@ import { useMessage } from "../../app/zustand/useMessage";
 
 class AuthHandlers {
     async registration(username: string, email: string, password: string): Promise<any> {
-        const res: AxiosResponse = await instance.post("auth/registration", {
-            email,
-            username,
-            password
-        })
-    
-        return res.data
+        try {
+            const res: AxiosResponse = await instance.post("auth/registration", {
+                email,
+                username,
+                password
+            })
+        
+            return res.data
+        } catch(error: any) {
+            return error.response.data.detail
+        }
+       
     }
     async login(email: string, password: string): Promise<any> {
-        const res: AxiosResponse = await instance.post("auth/login", {
-            email,
-            password
-        })
-
-        return res.data
+        try {
+            const res: AxiosResponse = await instance.post("auth/login", {
+                email,
+                password
+            })
+            if (res.status == 400) {
+                return "Hello"
+            }
+    
+            return res.data
+        } catch(error: any) {
+            return error.response.data.detail
+        }
+        
     }
     async logout(): Promise<any> {
         const res: AxiosResponse = await instance.post("auth/logout")

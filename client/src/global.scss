@@ -31,3 +31,8 @@ body {
         }
     }
 }
+
+::selection {
+    color: #eee;
+    background-color: #8676ff98;
+}

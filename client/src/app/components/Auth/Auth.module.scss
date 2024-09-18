@@ -37,6 +37,14 @@
             justify-content: center;
             align-items: start;
             gap: 5px;
+            label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                user-select: none;
+                cursor: pointer;
+            }
             input {
                 width: 100%;
                 padding: 10px 20px;
