@@ -1,10 +1,9 @@
 import { createContext, useEffect, useContext, useState, Dispatch, SetStateAction } from "react";
-import { IUser } from "../../types/IUser";
 
 
 interface ContextType {
-    authUser: string | null | IUser,
-    setAuthUser: null | Dispatch<SetStateAction<string | null | IUser>>
+    authUser: any,
+    setAuthUser: null | Dispatch<SetStateAction<any>>
 }
 
 
@@ -22,7 +21,7 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({children}: {children: React.ReactNode}) => {
 
-    const [authUser, setAuthUser] = useState<string | null | IUser>("")
+    const [authUser, setAuthUser] = useState<any>("")
 
     useEffect(() => {
         // @ts-ignore

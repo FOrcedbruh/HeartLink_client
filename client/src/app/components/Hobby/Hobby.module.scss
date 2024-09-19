@@ -1,0 +1,16 @@
+@import "./../../../mixins/mixins";
+
+.hobby {
+    padding: 5px 10px;
+    background-color: $primary_color;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+        color: #fff;
+        letter-spacing: 0.04rem;
+        margin: 0;
+        padding: 0;
+    }
+}

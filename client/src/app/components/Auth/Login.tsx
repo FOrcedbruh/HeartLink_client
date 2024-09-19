@@ -8,6 +8,7 @@ import closeEye from './../../../icons/closeEye.svg';
 import { useState } from 'react';
 import { useAuthContext } from '../../../api/auth/authContext';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 
 interface FormStateType {
@@ -43,9 +44,13 @@ const Login: React.FC = () => {
     const onSubmit = async (data: FormStateType) => {
         const res = await AHandlers.login(data.email, data.password)
         if (res.access_token) {
-            //@ts-ignore
-            setAuthUser(res.access_token)
-            localStorage.setItem("auser", JSON.stringify(res))
+            setTimeout(async () => {
+                const data = await AHandlers.me(res.access_token)
+                console.log(data)
+                //@ts-ignore
+                setAuthUser(data)
+                localStorage.setItem("auser", JSON.stringify(data))
+            }, 300);
             navigate("/me")
         } else {
             setMessage(res)
@@ -56,8 +61,8 @@ const Login: React.FC = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2>Вход</h2>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <motion.h2 initial={{opacity: 0, scale: 0.8, y: 30}} animate={{opacity: 1, scale: 1, y: 0, transition: { delay: 0.7 }}}>Вход</motion.h2>
+            <motion.form initial={{y: 40, opacity: 0}} animate={{y: 0, opacity: 1, transition: { duration: 0.7 }}} className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label htmlFor='email'>Эл. почта</label>
                     <input type="email" placeholder='@mail...' {...register("email", {
@@ -83,7 +88,7 @@ const Login: React.FC = () => {
                 <Button width='85%' type='submit' disabled={!isValid}>
                     Войти
                 </Button>
-            </form>
+            </motion.form>
         </div>
     )
 }

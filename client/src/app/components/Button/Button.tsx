@@ -1,4 +1,6 @@
 import styles from './Button.module.scss'
+import { motion } from 'framer-motion'
+
 
 interface ButtonPropsType {
     children: React.ReactNode,
@@ -15,9 +17,9 @@ const Button: React.FC<ButtonPropsType> = ({ children, disabled, width, height, 
 
 
     return (
-        <button disabled={disabled} onClick={onClick} type={type} className={styles.btn} style={{'width': width, "height": height, "opacity": disabled ? 0.5 : 1, "cursor": disabled ? "not-allowed" : "pointer" }}>
+        <motion.button whileHover={{scale: 1.1}} disabled={disabled} onClick={onClick} type={type} className={styles.btn} style={{'width': width, "height": height, "opacity": disabled ? 0.5 : 1, "cursor": disabled ? "not-allowed" : "pointer" }}>
             {children}
-        </button>
+        </motion.button>
     )
 }
 

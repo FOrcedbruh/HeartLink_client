@@ -7,6 +7,7 @@ import closeEye from './../../../icons/closeEye.svg';
 import { useState } from 'react';
 import { useMessage } from '../../zustand/useMessage';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 
 
@@ -57,9 +58,13 @@ const Reg: React.FC = () => {
 
         const res = await AHandlers.registration(data.username, data.email, data.password)
         if (res.access_token) {
-            //@ts-ignore
-            setAuthUser(res.access_token)
-            localStorage.setItem("auser", JSON.stringify(res))
+            setTimeout(async () => {
+                const data = await AHandlers.me(res.access_token)
+                console.log(data)
+                //@ts-ignore
+                setAuthUser(data)
+                localStorage.setItem("auser", JSON.stringify(data))
+            }, 300);
             navigate("/me")
         } else {
             setMessage(res)
@@ -70,8 +75,8 @@ const Reg: React.FC = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2>Регистрация</h2>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <motion.h2 initial={{opacity: 0, scale: 0.8, y: 30}} animate={{opacity: 1, scale: 1, y: 0, transition: { delay: 0.7 }}}>Регистрация</motion.h2>
+            <motion.form initial={{y: 40, opacity: 0}} animate={{y: 0, opacity: 1, transition: { duration: 0.7 }}} className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label htmlFor="username">Придумайте имя</label>
                     <input type="text" placeholder='name...' {...register("username", {
@@ -115,7 +120,7 @@ const Reg: React.FC = () => {
                 <Button disabled={!isValid} type='submit' width='85%'>
                     Регистрация
                 </Button>
-            </form>
+            </motion.form>
         </div>
     )
 }

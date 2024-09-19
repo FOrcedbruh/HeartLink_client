@@ -15,9 +15,6 @@ const Layout: React.FC = () => {
             <article className={styles.container}>
                 <Outlet />
             </article>
-            <footer className={styles.footer}>
-
-            </footer>
         </section>
     )
 }

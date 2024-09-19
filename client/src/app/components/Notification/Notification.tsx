@@ -1,6 +1,7 @@
 import styles from './Notification.module.scss'
 import { useMessage } from '../../zustand/useMessage'
 import { useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 
 interface NotificationPropsType {
@@ -19,9 +20,9 @@ const Notification: React.FC<NotificationPropsType> = ({ children }) => {
 
     return (
         <section className={styles.wrapper}>
-            {message && <div className={styles.message}>
+            {message && <motion.div initial={{x: -30, y: -20, scale: 0.8}} animate={{x: 0, y: 0, scale: 1}} className={styles.message}>
                 <p>{message}</p>
-            </div>}
+            </motion.div>}
             {children}
         </section>
     )

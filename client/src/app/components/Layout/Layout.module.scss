@@ -3,7 +3,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
 
     .container {
@@ -14,15 +14,6 @@
         min-height: 60vh;
         justify-content: center;
         align-items: center;
-    }
-
-    .footer {
-        width: 100%;
-        padding: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 200px;
     }
 }
 
