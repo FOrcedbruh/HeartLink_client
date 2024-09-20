@@ -3,6 +3,7 @@ import Layout from "./components/Layout/Layout";
 import { useAuthContext } from "../api/auth/authContext";
 import Auth from "./components/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
+import { Loader } from "./components/Loader/loader";
 
 
 const App: React.FC = () => {
@@ -13,7 +14,7 @@ const App: React.FC = () => {
         <main className="main">
             <Routes>
                 <Route element={<Layout />}>
-                    <Route path="/" element={authUser ? <>Auth</> : <Auth />}/>
+                    <Route path="/" element={authUser ? <Loader /> : <Auth />}/>
                     <Route path="/me" element={<Profile />}/>
                 </Route>
             </Routes>

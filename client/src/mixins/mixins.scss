@@ -1,9 +1,9 @@
 @mixin primary_gradient__color {
-    background: rgb(143,0,245);
-    background: -moz-linear-gradient(90deg, rgba(143,0,245,1) 0%, rgba(42,198,255,1) 51%, rgba(0,102,189,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(143,0,245,1) 0%, rgba(42,198,255,1) 51%, rgba(0,102,189,1) 100%);
-    background: linear-gradient(90deg, rgba(143,0,245,1) 0%, rgba(42,198,255,1) 51%, rgba(0,102,189,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8f00f5",endColorstr="#0066bd",GradientType=1);
+    background: rgb(133,118,255);
+    background: -moz-linear-gradient(90deg, rgba(133,118,255,1) 26%, rgba(255,113,130,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133,118,255,1) 26%, rgba(255,113,130,1) 100%);
+    background: linear-gradient(90deg, rgba(133,118,255,1) 26%, rgba(255,113,130,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8576ff",endColorstr="#ff7182",GradientType=1);
 }
 
 

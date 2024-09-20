@@ -1,0 +1,13 @@
+@import "../../../mixins/mixins";
+
+.window {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader {
+    font-size: 30px;
+}
+

@@ -8,13 +8,20 @@ import { Hobby } from '../../components/Hobby/Hobby'
 import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
-
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectCube, Pagination } from 'swiper/modules';
+import 'swiper/scss';
+import 'swiper/scss/effect-cube';
+import 'swiper/scss/pagination';
+import plusIcon from './../../../icons/plusIcon.svg'
+import { motion } from 'framer-motion'
+import { LoaderWindow } from '../../components/Loader/loader'
 
 
 
 const Profile: React.FC = () => {
 
-    const { authUser } = useAuthContext()
+    const { authUser, setAuthUser } = useAuthContext()
 
     const [profile, setProfile] = useState<IProfile | null>(null)
     const [user, setUser] = useState<IUser | null>(null)
@@ -31,19 +38,54 @@ const Profile: React.FC = () => {
 
     const logout = async () => {
         localStorage.clear()
+        //@ts-ignore
+        setAuthUser(null)
         await AHandlers.logout()
         navigate("/")
     }
-    
+
+    const variants = {
+        initial: {
+            opacity: 0,
+            y: 20
+        },
+        animate: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 1 }
+        }
+    }
+
+    if (!authUser) {
+        return <LoaderWindow />
+    }
     
 
     return (
         <section className={styles.window}>
             <div className={styles.userData}>
-                <div className={styles.user}>
-                   <h3>{user?.username} <sup>{user?.email}</sup></h3>
-                </div>
-                <div className={styles.profile}>
+                <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.userWrapper}>
+                    <h1>Пользователь</h1>
+                    <div className={styles.user}>
+                            <h3>{user?.username} <sup>{user?.email}</sup></h3>
+                    </div>
+                </motion.div>
+                <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
+                   {profile?.profileImages
+                    ? 
+                    <Swiper pagination={true} className={styles.swiper} cubeEffect={{shadow: false}} effect={'cube'} grabCursor={true} modules={[EffectCube, Pagination]}>
+                            <SwiperSlide>slide 1</SwiperSlide>
+                            <SwiperSlide>slide 2</SwiperSlide>
+                            <SwiperSlide>slide 3</SwiperSlide>
+                    </Swiper>
+                    :
+                    <motion.div whileHover={{scale: 1.06, rotate: 6}} className={styles.notSwiper}>
+                        <h2>Добавьте фото <img src={plusIcon} alt="" width={30} height={30}/></h2>
+                    </motion.div>
+                    }
+                </motion.div>
+                
+                <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.profile}>
                     <h1>Ваш профиль</h1>
 
                     <ul>
@@ -69,7 +111,7 @@ const Profile: React.FC = () => {
                         <textarea disabled value={profile?.bio} name="bio" className={styles.textarea}>
                         </textarea>
                     </div>
-                </div>
+                </motion.div>
             </div>
             <div className={styles.controller}>
                 <Button onClick={logout} type='button' width='200px'>
