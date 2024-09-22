@@ -2,7 +2,7 @@ import styles from './Loader.module.scss'
 import { motion } from 'framer-motion'
 
 
-export const Loader: React.FC = () => {
+export const LoaderComponent: React.FC = () => {
     return (
         <motion.div
         animate={{
@@ -25,7 +25,7 @@ export const Loader: React.FC = () => {
 export const LoaderWindow: React.FC = () => {
     return (
         <section className={styles.window}>
-            <Loader />
+            <LoaderComponent />
         </section>
     )
 }

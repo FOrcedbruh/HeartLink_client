@@ -17,7 +17,7 @@ const Button: React.FC<ButtonPropsType> = ({ children, disabled, width, height, 
 
 
     return (
-        <motion.button whileHover={{scale: 1.1}} disabled={disabled} onClick={onClick} type={type} className={styles.btn} style={{'width': width, "height": height, "opacity": disabled ? 0.5 : 1, "cursor": disabled ? "not-allowed" : "pointer" }}>
+        <motion.button whileTap={{scale: 1}} whileHover={{scale: 1.1}} disabled={disabled} onClick={onClick} type={type} className={styles.btn} style={{'width': width, "height": height, "opacity": disabled ? 0.5 : 1, "cursor": disabled ? "not-allowed" : "pointer" }}>
             {children}
         </motion.button>
     )

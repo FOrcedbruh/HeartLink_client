@@ -1,0 +1,36 @@
+@import "./../../../mixins/mixins";
+
+
+.navbar {
+    position: absolute;
+    bottom: 10%;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary_color;
+    width: 400px;
+    padding: 20px;
+    max-height: 100px;
+    border-radius: 20px;
+    box-shadow: -1px 0px 35px 1px rgba(0, 0, 0, 0.2);
+
+    ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        li {
+            font-size: 24px;
+            a {
+                text-decoration: none;
+    
+            }
+        }
+        }
+        
+}

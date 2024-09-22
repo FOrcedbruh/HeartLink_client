@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
 import styles from './Layout.module.scss'
-
-
+import Navbar from "../Navbar/Navbar";
+import { useAuthContext } from "../../../api/auth/authContext";
 
 const Layout: React.FC = () => {
+
+    const { authUser } = useAuthContext()
 
     return (
         <section className={styles.window}>
@@ -15,6 +17,7 @@ const Layout: React.FC = () => {
             <article className={styles.container}>
                 <Outlet />
             </article>
+            {authUser && <Navbar />}
         </section>
     )
 }
