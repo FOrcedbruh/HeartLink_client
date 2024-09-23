@@ -4,6 +4,8 @@ import { useAuthContext } from "../api/auth/authContext";
 import Auth from "./components/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 import { LoaderComponent } from "./components/Loader/Loader";
+import CreateProfile from "./pages/Create/CreateProfile";
+
 
 
 const App: React.FC = () => {
@@ -17,6 +19,7 @@ const App: React.FC = () => {
                     <Route path="/" element={authUser ? <LoaderComponent /> : <Auth />}/>
                     <Route path="/me" element={<Profile />}/>
                 </Route>
+                <Route path="/me/create" element={<CreateProfile step={0} status="create"/>}/>
             </Routes>
         </main>
     )

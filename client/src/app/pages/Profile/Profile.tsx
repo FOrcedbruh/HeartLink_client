@@ -119,7 +119,7 @@ const Profile: React.FC = () => {
                 :
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.createProfileBtn}>
                     <h1>Создайте свой <span>профиль</span>, чтобы вас могли видеть другие люди</h1>
-                    <Button type="button" onClick={() => navigate("/profile/crete")} width='60%'>
+                    <Button type="button" onClick={() => navigate("/me/create")} width='60%'>
                         <p>Создать</p>
                     </Button>
                 </motion.div>
