@@ -108,7 +108,34 @@ interface ThirdStagePropsType {
 }
 
 
-const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage }) => {
+const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage}) => {
+
+    const [age, setAge] = useState<number>(18)
+    const [gender, setGender] = useState<string>("Мужчина")
+
+    return (
+        <div className={styles.third}>
+            <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6} }}>Укажите пол и возраст</motion.h1>
+            <div className={styles.gender}>
+                <div onClick={() => setGender("Мужчина")} style={{ "backgroundColor" : gender === "Мужчина" ? "#8576FF" : ""}}>Мужчина</div>
+                <div onClick={() => setGender("Женщина")} style={{ "backgroundColor" : gender === "Женщина" ? "#8576FF" : ""}}>Женщина</div>
+            </div>
+            <div className={styles.age}>
+                <h2>Возраст</h2>
+                <p onClick={() => setAge(age - 1)}>-</p><h3>{age}</h3><p onClick={() => setAge(age + 1)}>+</p>
+            </div>
+        </div>
+    )
+}
+
+
+interface FourthStagePropsType {
+    stage: number,
+    setStage: Dispatch<SetStateAction<number>>
+}
+
+
+const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage }) => {
 
 
     const [step, setStep] = useState<number>(0);
@@ -154,7 +181,7 @@ const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage }) => {
     }, [])
 
     return (
-        <div className={styles.third}>
+        <div className={styles.fourth}>
             {step === 0 &&
             <div className={styles.hobbies}>
                 <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6 }}}>Выберите то, что любите</motion.h1>
@@ -170,7 +197,8 @@ const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage }) => {
             {step === 1 && 
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}  className={styles.bio}>
                 <h1>Что-то о вас</h1>
-                <textarea value={bio} onChange={e => setBio(e.target.value)} placeholder='Начните писать...'></textarea>
+                <textarea maxLength={300} value={bio} onChange={e => setBio(e.target.value)} placeholder='Начните писать...'></textarea>
+                <p>{bio.length} / 300</p>
                 {bio && <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}><Button type='button' width='200px'>Дальше</Button></motion.div>}
             </motion.div>
             }
@@ -191,6 +219,7 @@ const CreateProfile: React.FC<ThisStatePropsType> = ({ step, status }) => {
             {stage === 0 &&  <Greeting setStage={setStage} stage={stage}/>}
             {stage === 1 && <SecondStage setStage={setStage} stage={stage}/>}
             {stage === 2 && <ThirdStage setStage={setStage} stage={stage}/>}
+            {stage === 3 && <FourthStage setStage={setStage} stage={stage}/>}
         </section>
     )
 }

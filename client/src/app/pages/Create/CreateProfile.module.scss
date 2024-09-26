@@ -64,9 +64,75 @@
         }
     }
 
-
     .third {
-        width: 30%;
+        width: 40%;
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        gap: 30px;
+
+        h1 {
+            color: #eee;
+            padding: 0;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .gender {
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background-color: #eee;
+            padding: 20px;
+            border-radius: 16px;
+
+            div {
+                width: 40%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #000;
+                user-select: none;
+                cursor: pointer;
+                padding: 5px 10px;
+                border-radius: 10px;
+                transition: all .3s ease;
+
+                &:hover {
+                    background-color: #cfcfcf;
+                }
+            }
+        }
+        .age {
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background-color: #eee;
+            border-radius: 16px;
+            user-select: none;
+            h3 {
+                font-size: 26px;
+            }
+            p {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 40px;
+                cursor: pointer;
+            }
+        }
+    }
+
+
+    .fourth {
+        width: 50%;
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -80,7 +146,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            height: 60vh;
+            height: 80vh;
             text-align: center;
             gap: 30px;
             h1 {
@@ -94,6 +160,7 @@
                 width: 100%;
                 height: 60vh;
                 overflow-y: scroll;
+                overflow-x: scroll;
                 display: flex;
                 flex-direction: column;
                 justify-content: start;
@@ -118,8 +185,9 @@
             }
         }
         .bio {
-            width: 100%;
-            height: 40vh;
+            align-self: center;
+            width: 70%;
+            height: 55vh;
             display: flex;
             flex-direction: column;
             justify-content: start;
@@ -153,6 +221,13 @@
                 &::placeholder {
                     color: $primary_color;
                 }
+            }
+            p {
+                align-self: flex-end;
+                color: $primary_color;
+                font-size: 12px;
+                padding: 0;
+                margin: 0;
             }
         }
     }
