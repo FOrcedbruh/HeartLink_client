@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form'
 import { Hobby } from '../../components/Hobby/Hobby'
 import { getHobbies } from '../../../api/hobbies/handlers'
 import { IHobby } from '../../../types/IHobby'
+import Success from './SuccessWindow'
+
 
 
 interface ThisStatePropsType {
@@ -41,10 +43,11 @@ const Greeting: React.FC<GreetingPropsType> = ({ stage, setStage }) => {
 
 interface SecondStagePropsType {
     stage: number,
-    setStage: Dispatch<SetStateAction<number>>
+    setStage: Dispatch<SetStateAction<number>>,
+    setFirstname: Dispatch<SetStateAction<string>>
 }
 
-const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage }) => {
+const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirstname }) => {
 
     interface FormStatetype {
         firstname: string,
@@ -65,6 +68,7 @@ const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage }) => {
 
     const onSubmit = (data: FormStatetype) => {
         console.log(data)
+        setFirstname(data.firstname)
         reset()
         setStage(stage + 1)
     }
@@ -113,18 +117,31 @@ const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage}) => {
     const [age, setAge] = useState<number>(18)
     const [gender, setGender] = useState<string>("Мужчина")
 
+    const plusAge = () => {
+        if (age < 100) {
+            setAge(age + 1)
+        }
+    }
+
+    const minusAge = () => {
+        if (age > 18) {
+            setAge(age - 1)
+        }
+    }
+
     return (
-        <div className={styles.third}>
-            <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6} }}>Укажите пол и возраст</motion.h1>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6} }} className={styles.third}>
+            <h1 >Укажите пол и возраст</h1>
             <div className={styles.gender}>
                 <div onClick={() => setGender("Мужчина")} style={{ "backgroundColor" : gender === "Мужчина" ? "#8576FF" : ""}}>Мужчина</div>
                 <div onClick={() => setGender("Женщина")} style={{ "backgroundColor" : gender === "Женщина" ? "#8576FF" : ""}}>Женщина</div>
             </div>
             <div className={styles.age}>
                 <h2>Возраст</h2>
-                <p onClick={() => setAge(age - 1)}>-</p><h3>{age}</h3><p onClick={() => setAge(age + 1)}>+</p>
+                <motion.p whileTap={{ scale: 0.8, backgroundColor: "#8576FF" }} whileHover={{ scale: 1.1 }} onClick={minusAge}>-</motion.p><input type="text" onChange={e => setAge(Number(e.target.value))} value={age}/><motion.p whileTap={{ scale: 0.8, backgroundColor: "#8576FF" }} whileHover={{ scale: 1.1 }} onClick={plusAge}>+</motion.p>
             </div>
-        </div>
+            <Button width='200px' onClick={() => setStage(stage + 1)} type='button'>Дальше</Button>
+        </motion.div>
     )
 }
 
@@ -199,7 +216,7 @@ const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage }) => {
                 <h1>Что-то о вас</h1>
                 <textarea maxLength={300} value={bio} onChange={e => setBio(e.target.value)} placeholder='Начните писать...'></textarea>
                 <p>{bio.length} / 300</p>
-                {bio && <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}><Button type='button' width='200px'>Дальше</Button></motion.div>}
+                {bio && <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}><Button onClick={() => setStage(stage + 1)} type='button' width='200px'>Дальше</Button></motion.div>}
             </motion.div>
             }
         </div>
@@ -212,14 +229,23 @@ const CreateProfile: React.FC<ThisStatePropsType> = ({ step, status }) => {
 
     
     const [stage, setStage] = useState<number>(step)
+    const [firstname, setFirstname] = useState<string>("")
 
 
     return (
         <section className={styles.window}>
             {stage === 0 &&  <Greeting setStage={setStage} stage={stage}/>}
-            {stage === 1 && <SecondStage setStage={setStage} stage={stage}/>}
+            {stage === 1 && <SecondStage setStage={setStage} stage={stage} setFirstname={setFirstname}/>}
             {stage === 2 && <ThirdStage setStage={setStage} stage={stage}/>}
             {stage === 3 && <FourthStage setStage={setStage} stage={stage}/>}
+            {stage === 4 && <Success firstname={firstname}/>}
+            <div className={styles.pagination}>
+                {Array(5).fill(0).map((el, index) => {
+                    return (
+                        <motion.section animate={{scale: stage === index ? 2 : 1, transition: { duration: 0.2 }}}></motion.section>
+                    )
+                })}
+            </div>
         </section>
     )
 }
