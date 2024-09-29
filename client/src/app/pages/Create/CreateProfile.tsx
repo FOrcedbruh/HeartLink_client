@@ -7,7 +7,8 @@ import { Hobby } from '../../components/Hobby/Hobby'
 import { getHobbies } from '../../../api/hobbies/handlers'
 import { IHobby } from '../../../types/IHobby'
 import Success from './SuccessWindow'
-
+import arrowIcon from './../../../icons/arrowIcon.svg'
+import { PHandlers } from '../../../api/profiles/handlers'
 
 
 interface ThisStatePropsType {
@@ -44,10 +45,11 @@ const Greeting: React.FC<GreetingPropsType> = ({ stage, setStage }) => {
 interface SecondStagePropsType {
     stage: number,
     setStage: Dispatch<SetStateAction<number>>,
-    setFirstname: Dispatch<SetStateAction<string>>
+    setFirstname: Dispatch<SetStateAction<string>>,
+    access_token: string
 }
 
-const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirstname }) => {
+const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirstname, access_token }) => {
 
     interface FormStatetype {
         firstname: string,
@@ -66,8 +68,9 @@ const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirst
         mode: "onBlur"
     })
 
-    const onSubmit = (data: FormStatetype) => {
-        console.log(data)
+    const onSubmit = async (data: FormStatetype) => {
+        const res = await PHandlers.create_profile(data.firstname, data.surname, access_token)
+        console.log(res)
         setFirstname(data.firstname)
         reset()
         setStage(stage + 1)
@@ -108,11 +111,12 @@ const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirst
 
 interface ThirdStagePropsType {
     stage: number,
-    setStage: Dispatch<SetStateAction<number>>
+    setStage: Dispatch<SetStateAction<number>>,
+    access_token: string
 }
 
 
-const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage}) => {
+const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage, access_token}) => {
 
     const [age, setAge] = useState<number>(18)
     const [gender, setGender] = useState<string>("Мужчина")
@@ -129,18 +133,25 @@ const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage}) => {
         }
     }
 
+    const onSubmit = async () => {
+        const res = await PHandlers.update_gender_age(gender, age, access_token)
+        console.log(res)
+
+        setStage(stage + 1)
+    }
+
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6} }} className={styles.third}>
             <h1 >Укажите пол и возраст</h1>
             <div className={styles.gender}>
-                <div onClick={() => setGender("Мужчина")} style={{ "backgroundColor" : gender === "Мужчина" ? "#8576FF" : ""}}>Мужчина</div>
-                <div onClick={() => setGender("Женщина")} style={{ "backgroundColor" : gender === "Женщина" ? "#8576FF" : ""}}>Женщина</div>
+                <div onClick={() => setGender("MALE")} style={{ "backgroundColor" : gender === "MALE" ? "#8576FF" : ""}}>Мужчина</div>
+                <div onClick={() => setGender("FEMALE")} style={{ "backgroundColor" : gender === "FEMALE" ? "#8576FF" : ""}}>Женщина</div>
             </div>
             <div className={styles.age}>
                 <h2>Возраст</h2>
                 <motion.p whileTap={{ scale: 0.8, backgroundColor: "#8576FF" }} whileHover={{ scale: 1.1 }} onClick={minusAge}>-</motion.p><input type="text" onChange={e => setAge(Number(e.target.value))} value={age}/><motion.p whileTap={{ scale: 0.8, backgroundColor: "#8576FF" }} whileHover={{ scale: 1.1 }} onClick={plusAge}>+</motion.p>
             </div>
-            <Button width='200px' onClick={() => setStage(stage + 1)} type='button'>Дальше</Button>
+            <Button width='200px' onClick={onSubmit} type='button'>Дальше</Button>
         </motion.div>
     )
 }
@@ -148,11 +159,12 @@ const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage}) => {
 
 interface FourthStagePropsType {
     stage: number,
-    setStage: Dispatch<SetStateAction<number>>
+    setStage: Dispatch<SetStateAction<number>>,
+    access_token: string
 }
 
 
-const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage }) => {
+const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage, access_token }) => {
 
 
     const [step, setStep] = useState<number>(0);
@@ -182,20 +194,24 @@ const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage }) => {
     }
 
     const selectHobby = (title: string) => {
-        if (selectedHobbies.includes(title)) {
-            selectedHobbies.splice(selectedHobbies.indexOf(title), 1)
-            return
+        if (!selectedHobbies.includes(title)) {
+            setSelectedHobbies([...selectedHobbies, title])
         }
-        setSelectedHobbies([...selectedHobbies, title])
     }
-
-    const isSelectHobby = (title: string): boolean => {
-        return selectedHobbies.includes(title)
+    const eraseHobby = (index: number) => {
+        selectedHobbies.splice(index, 1)
+        setSelectedHobbies([...selectedHobbies])
     }
 
     useEffect(() => {
         setSelectedHobbies([...selectedHobbies])
     }, [])
+
+    const onSubmit = async () => {
+        const res = await PHandlers.update_bio_hobbies(bio, selectedHobbies, access_token)
+        console.log(res)
+        setStage(stage + 1)
+    }
 
     return (
         <div className={styles.fourth}>
@@ -205,18 +221,25 @@ const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage }) => {
                 <motion.article initial={{ opacity: 0, y: 30}} animate={{opacity: 1, y: 0, transition: { duration: 1 }}}>
                     {hobbies.map(hobby => {
                         return (
-                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => selectHobby(hobby.title)} custom={hobby.id} initial={"initial"} animate={"animate"} variants={variants} key={hobby.id}><Hobby  hobby={hobby.title}/>{isSelectHobby(hobby.title) && <p>❤️</p>}</motion.div>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => selectHobby(hobby.title)} custom={hobby.id} initial={"initial"} animate={"animate"} variants={variants} key={hobby.id}><Hobby status="primary" hobby={hobby.title}/></motion.div>
                         )
                     })}
                 </motion.article>
-                <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 1 }}}><Button type='button' onClick={() => setStep(step + 1)} width='200px'>Дальше</Button></motion.div>
+                <div className={styles.selectedHobbies}>
+                    {selectedHobbies.map((hobby, index) => {
+                        return (
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => eraseHobby(index)} initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6 } }}><Hobby key={index} hobby={`${hobby}❤️`} status="secondary"/></motion.div>
+                        )
+                    })}
+                </div>
+                {selectedHobbies.length > 0 && <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 1 }}}><Button type='button' onClick={() => setStep(step + 1)} width='200px'>Дальше</Button></motion.div>}
             </div>}
             {step === 1 && 
             <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}  className={styles.bio}>
                 <h1>Что-то о вас</h1>
                 <textarea maxLength={300} value={bio} onChange={e => setBio(e.target.value)} placeholder='Начните писать...'></textarea>
                 <p>{bio.length} / 300</p>
-                {bio && <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}><Button onClick={() => setStage(stage + 1)} type='button' width='200px'>Дальше</Button></motion.div>}
+                {bio && <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: { duration: 0.5 }}}><Button onClick={onSubmit}  type='button' width='200px'>Дальше</Button></motion.div>}
             </motion.div>
             }
         </div>
@@ -231,18 +254,22 @@ const CreateProfile: React.FC<ThisStatePropsType> = ({ step, status }) => {
     const [stage, setStage] = useState<number>(step)
     const [firstname, setFirstname] = useState<string>("")
 
+    //@ts-ignore
+    const access_token: string = localStorage.getItem("access_token")
+
 
     return (
         <section className={styles.window}>
+            {stage >= 2 && <motion.div initial={{opacity: 0, x: 20}} animate={{opacity: 1, x: 0}} onClick={() => setStage(stage - 1)} whileHover={{ opacity: 0.6 }} className={styles.backBtn}><img src={arrowIcon} width={24} height={24} alt="" />Назад</motion.div>}
             {stage === 0 &&  <Greeting setStage={setStage} stage={stage}/>}
-            {stage === 1 && <SecondStage setStage={setStage} stage={stage} setFirstname={setFirstname}/>}
-            {stage === 2 && <ThirdStage setStage={setStage} stage={stage}/>}
-            {stage === 3 && <FourthStage setStage={setStage} stage={stage}/>}
+            {stage === 1 && <SecondStage access_token={access_token} setStage={setStage} stage={stage} setFirstname={setFirstname}/>}
+            {stage === 2 && <ThirdStage access_token={access_token} setStage={setStage} stage={stage}/>}
+            {stage === 3 && <FourthStage access_token={access_token} setStage={setStage} stage={stage}/>}
             {stage === 4 && <Success firstname={firstname}/>}
             <div className={styles.pagination}>
                 {Array(5).fill(0).map((el, index) => {
                     return (
-                        <motion.section animate={{scale: stage === index ? 2 : 1, transition: { duration: 0.2 }}}></motion.section>
+                        <motion.section key={index} animate={{scale: stage === index ? 2 : 1, transition: { duration: 0.2 }}}></motion.section>
                     )
                 })}
             </div>

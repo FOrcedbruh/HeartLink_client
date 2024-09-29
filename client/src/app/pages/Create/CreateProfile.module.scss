@@ -120,6 +120,7 @@
             border-radius: 16px;
             user-select: none;
             input {
+                text-align: center;
                 font-size: 26px;
                 font-weight: 500;
                 padding: 2px 5px;
@@ -201,6 +202,15 @@
                         margin: 0;
                     }
                 }
+            }
+
+            .selectedHobbies {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 40px;
+                gap: 20px;
             }
         }
         .bio {
@@ -286,4 +296,16 @@
         border-radius: 50%;
         background-color: #73EC8B;
     }
+}
+
+.backBtn {
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    color: #eee;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }

@@ -46,7 +46,8 @@ const Login: React.FC = () => {
         if (res.access_token) {
             setTimeout(async () => {
                 const data = await AHandlers.me(res.access_token)
-                console.log(data)
+                localStorage.setItem("access_token", res.access_token)
+                localStorage.setItem("refresh_token", res.refresh_token)
                 //@ts-ignore
                 setAuthUser(data)
                 localStorage.setItem("auser", JSON.stringify(data))
