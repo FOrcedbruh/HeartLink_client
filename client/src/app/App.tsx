@@ -5,12 +5,14 @@ import Auth from "./components/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 import { LoaderComponent } from "./components/Loader/Loader";
 import CreateProfile from "./pages/Create/CreateProfile";
-
+import { useCreateStatus } from "./zustand/useCreateStatus";
 
 
 const App: React.FC = () => {
 
     const { authUser } = useAuthContext()
+
+    const { stage } = useCreateStatus()
 
     return (
         <main className="main">
@@ -19,7 +21,7 @@ const App: React.FC = () => {
                     <Route path="/" element={authUser ? <LoaderComponent /> : <Auth />}/>
                     <Route path="/me" element={<Profile />}/>
                 </Route>
-                <Route path="/me/create" element={<CreateProfile step={0} status="create"/>}/>
+                <Route path="/me/create" element={<CreateProfile step={stage} status="create"/>}/>
             </Routes>
         </main>
     )

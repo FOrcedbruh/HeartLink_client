@@ -17,6 +17,7 @@ import plusIcon from './../../../icons/plusIcon.svg'
 import { motion } from 'framer-motion'
 import { LoaderWindow } from '../../components/Loader/Loader'
 import logoutIcon from './../../../icons/logout.svg'
+import { ModalFiles } from './ModalFiles/ModalFiles'
 
 
 const Profile: React.FC = () => {
@@ -26,7 +27,11 @@ const Profile: React.FC = () => {
     const [profile, setProfile] = useState<IProfile | null>(null)
     const [user, setUser] = useState<IUser | null>(null)
 
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
+
     const navigate = useNavigate()
+
+    
 
 
     useEffect(() => {
@@ -59,10 +64,14 @@ const Profile: React.FC = () => {
     if (!authUser) {
         return <LoaderWindow />
     }
+
+
+    
     
 
     return (
         <section className={styles.window}>
+            {modalOpen && <ModalFiles setModalOpen={setModalOpen}/>}
             <div className={styles.userData}>
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.userWrapper}>
                     <div className={styles.user}>
@@ -79,7 +88,7 @@ const Profile: React.FC = () => {
                             <SwiperSlide>slide 3</SwiperSlide>
                     </Swiper>
                     :
-                    <motion.div whileHover={{scale: 1.06, rotate: 6}} className={styles.notSwiper}>
+                    <motion.div onClick={() => setModalOpen(true)} whileHover={{scale: 1.06, rotate: 6}} className={styles.notSwiper}>
                         <h2>Добавьте фото <img src={plusIcon} alt="" width={30} height={30}/></h2>
                     </motion.div>
                     }

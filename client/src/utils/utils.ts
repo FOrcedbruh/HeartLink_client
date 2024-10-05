@@ -16,12 +16,16 @@ export const setEndAge = (age: number): string => {
 
 
 export const checkProfileKeys = (profile: IProfile): boolean => {
+    let emptyFields: number = 0
     const keys = Object.keys(profile)
     keys.forEach(key => {
         //@ts-ignore
-        if (!profile[key]) {
-            return false
+        if (profile[key]) {
+            emptyFields++;
         }
     });
+    if (emptyFields > 1) {
+        return false
+    }
     return true
 }
