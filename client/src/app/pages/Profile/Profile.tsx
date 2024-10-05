@@ -65,9 +65,8 @@ const Profile: React.FC = () => {
         <section className={styles.window}>
             <div className={styles.userData}>
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.userWrapper}>
-                    <h1>Пользователь</h1>
                     <div className={styles.user}>
-                            <h3>{user?.username} <sup>{user?.email}</sup></h3>
+                            <h3>Ваш тег: <span>{user?.username}</span></h3>
                     </div>
                 </motion.div>
                 {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
@@ -97,6 +96,9 @@ const Profile: React.FC = () => {
                            <h2>{profile?.firstname} {profile?.surname} </h2> <h2>{profile?.age} {setEndAge(Number(profile?.age))}</h2>
                         </li>
                         <li>
+                            <h3>{user?.email}</h3>
+                        </li>
+                        <li>
                             <h3>{profile?.gender}</h3>
                         </li>
                     </ul>
@@ -105,7 +107,7 @@ const Profile: React.FC = () => {
                         <div className={styles.hobbies}>
                             {profile?.hobbies.map(hobby => {
                                 return (
-                                    <Hobby key={hobby} hobby={hobby}/>
+                                    <Hobby status='primary' key={hobby} hobby={hobby}/>
                                 )
                             })}
                         </div>
