@@ -1,3 +1,4 @@
+import { IProfile } from "../types/IProfile"
 
 
 export const setEndAge = (age: number): string => {
@@ -11,4 +12,16 @@ export const setEndAge = (age: number): string => {
     }
 
     return "лет"
+}
+
+
+export const checkProfileKeys = (profile: IProfile): boolean => {
+    const keys = Object.keys(profile)
+    keys.forEach(key => {
+        //@ts-ignore
+        if (!profile[key]) {
+            return false
+        }
+    });
+    return true
 }

@@ -30,6 +30,11 @@
         align-self: center;
         text-align: center;
         gap: 40px;
+
+        @media only screen and (max-width: 480px) {
+            width: 100%;
+        }
+
         h2 {
             color: #eee;
             padding: 0;
@@ -41,12 +46,17 @@
             justify-content: start;
             align-items: center;
             gap: 40px;
+
             div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 gap: 20px;
                 width: 40%;
+
+                @media only screen and (max-width: 480px) {
+                    flex-direction: column;
+                }
             }
 
             input {
@@ -74,11 +84,29 @@
         align-items: center;
         gap: 30px;
 
+        @media only screen and (max-width: 1200px) {
+            width: 60%;
+        }
+        @media only screen and (max-width: 920px) {
+            width: 80%;
+        }
+        @media only screen and (max-width: 700px) {
+            width: 90%;
+        }
+        @media only screen and (max-width: 700px) {
+            width: 100%;
+            
+        }
+
         h1 {
             color: #eee;
             padding: 0;
             margin: 0;
             font-size: 24px;
+
+            @media only screen and (max-width: 700px) {
+                font-size: 18px;
+            }
         }
 
         .gender {
@@ -104,13 +132,18 @@
                 border-radius: 10px;
                 transition: all .3s ease;
 
+                @media only screen and (max-width: 700px) {
+                    font-size: 12px;
+                }
+
                 &:hover {
                     background-color: #cfcfcf;
                 }
             }
         }
         .age {
-            width: 60%;
+            padding: 10px;
+            width: 70%;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -119,6 +152,9 @@
             background-color: #eee;
             border-radius: 16px;
             user-select: none;
+
+           
+
             input {
                 text-align: center;
                 font-size: 26px;
@@ -126,7 +162,7 @@
                 padding: 2px 5px;
                 outline: none;
                 border: 2px solid transparent;
-                width: 15%;
+                width: 60px;
                 background-color: #eee;
                 border-radius: 8px;
                 transition: all .3s ease;
@@ -135,6 +171,11 @@
                 align-items: center;
                 &:focus {
                     border: 2px solid $primary_color;
+                }
+
+                @media only screen and (max-width: 700px) {
+                    font-size: 16px;
+                    width: 40px;
                 }
             }
             p {
@@ -146,6 +187,10 @@
                 align-items: center;
                 font-size: 40px;
                 cursor: pointer;
+
+                @media only screen and (max-width: 700px) {
+                    font-size: 20px;
+                }
             }
         }
     }

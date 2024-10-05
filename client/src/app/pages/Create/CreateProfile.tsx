@@ -119,7 +119,7 @@ interface ThirdStagePropsType {
 const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage, access_token}) => {
 
     const [age, setAge] = useState<number>(18)
-    const [gender, setGender] = useState<string>("Мужчина")
+    const [gender, setGender] = useState<string>("MALE")
 
     const plusAge = () => {
         if (age < 100) {

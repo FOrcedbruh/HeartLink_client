@@ -3,7 +3,7 @@ import { useAuthContext } from '../../../api/auth/authContext'
 import { useEffect, useState } from 'react'
 import { IProfile } from '../../../types/IProfile'
 import { IUser } from '../../../types/IUser'
-import { setEndAge } from '../../../utils/utils'
+import { setEndAge, checkProfileKeys } from '../../../utils/utils'
 import { Hobby } from '../../components/Hobby/Hobby'
 import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
@@ -85,7 +85,7 @@ const Profile: React.FC = () => {
                     }
                 </motion.div>}
                 
-                {profile
+                {profile?.firstname
                 // If not profile logics
                 ?
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.profile}>
@@ -93,16 +93,16 @@ const Profile: React.FC = () => {
 
                     <ul>
                         <li>
-                           <h2>{profile?.firstname} {profile?.surname} </h2> <h2>{profile?.age} {setEndAge(Number(profile?.age))}</h2>
+                           <h2>{profile?.firstname} {profile?.surname} </h2> {profile.age && <h2>{profile?.age} {setEndAge(Number(profile?.age))}</h2>}
                         </li>
                         <li>
                             <h3>{user?.email}</h3>
                         </li>
-                        <li>
+                       {profile.gender && <li>
                             <h3>{profile?.gender}</h3>
-                        </li>
+                        </li>}
                     </ul>
-                    <div className={styles.hobbieDiv}>
+                    {profile.hobbies && <div className={styles.hobbieDiv}>
                         <h3>Увлечения</h3>
                         <div className={styles.hobbies}>
                             {profile?.hobbies.map(hobby => {
@@ -111,12 +111,15 @@ const Profile: React.FC = () => {
                                 )
                             })}
                         </div>
-                    </div>
-                    <div className={styles.bio}>
+                    </div>}
+                    {profile.bio && <div className={styles.bio}>
                         <h3>Немного о себе</h3>
                         <textarea disabled value={profile?.bio} name="bio" className={styles.textarea}>
                         </textarea>
-                    </div>
+                    </div>}
+                    {checkProfileKeys(profile) && <div>
+                        <Button onClick={() => navigate("/me/create")} type='button' width='300px'>Продолжить настройку профиля</Button>
+                    </div>}
                 </motion.div>
                 :
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.createProfileBtn}>
