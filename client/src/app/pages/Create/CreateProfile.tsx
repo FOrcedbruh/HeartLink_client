@@ -228,7 +228,7 @@ const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage, access_t
                 <div className={styles.selectedHobbies}>
                     {selectedHobbies.map((hobby, index) => {
                         return (
-                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => eraseHobby(index)} initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6 } }}><Hobby key={index} hobby={`${hobby}❤️`} status="secondary"/></motion.div>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => eraseHobby(index)} initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6 } }} key={index}><Hobby  hobby={`${hobby}❤️`} status="secondary"/></motion.div>
                         )
                     })}
                 </div>
@@ -265,7 +265,7 @@ const CreateProfile: React.FC<ThisStatePropsType> = ({ step, status }) => {
             {stage === 1 && <SecondStage access_token={access_token} setStage={setStage} stage={stage} setFirstname={setFirstname}/>}
             {stage === 2 && <ThirdStage access_token={access_token} setStage={setStage} stage={stage}/>}
             {stage === 3 && <FourthStage access_token={access_token} setStage={setStage} stage={stage}/>}
-            {stage === 4 && <Success firstname={firstname}/>}
+            {stage === 4 && <Success access_token={access_token} firstname={firstname}/>}
             <div className={styles.pagination}>
                 {Array(5).fill(0).map((el, index) => {
                     return (
