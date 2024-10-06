@@ -29,7 +29,6 @@ class AuthHandlers {
         } catch(error: any) {
             return error.response.data.detail
         }
-        
     }
     async logout(): Promise<any> {
         const res: AxiosResponse = await instance.post("auth/logout")

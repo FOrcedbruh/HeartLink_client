@@ -14,7 +14,7 @@ import 'swiper/scss';
 import 'swiper/scss/effect-cube';
 import 'swiper/scss/pagination';
 import plusIcon from './../../../icons/plusIcon.svg'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { LoaderWindow } from '../../components/Loader/Loader'
 import logoutIcon from './../../../icons/logout.svg'
 import { ModalFiles } from './ModalFiles/ModalFiles'
@@ -71,7 +71,9 @@ const Profile: React.FC = () => {
 
     return (
         <section className={styles.window}>
-            {modalOpen && <ModalFiles setModalOpen={setModalOpen}/>}
+            <AnimatePresence>
+                {modalOpen && <ModalFiles setModalOpen={setModalOpen}/>}
+            </AnimatePresence>
             <div className={styles.userData}>
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.userWrapper}>
                     <div className={styles.user}>
