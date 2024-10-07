@@ -25,6 +25,15 @@
     justify-content: center;
     align-items: center;
     user-select: none;
+    
+    .menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      left: 3%;
+      cursor: pointer;
+    }
 
     .logo {
         h2 {

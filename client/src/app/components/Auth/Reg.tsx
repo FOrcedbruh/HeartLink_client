@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useMessage } from '../../zustand/useMessage';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuthContext } from '../../../api/auth/authContext';
 
 
 
@@ -22,7 +23,7 @@ interface FormStateType {
 
 const Reg: React.FC = () => {
 
-
+    const { setAuthUser } = useAuthContext()
 
     const [view, setView] = useState<Boolean>(false)
 
@@ -60,7 +61,8 @@ const Reg: React.FC = () => {
         if (res.access_token) {
             setTimeout(async () => {
                 const data = await AHandlers.me(res.access_token)
-                console.log(data)
+                localStorage.setItem("access_token", res.access_token)
+                localStorage.setItem("refresh_token", res.refresh_token)
                 //@ts-ignore
                 setAuthUser(data)
                 localStorage.setItem("auser", JSON.stringify(data))
