@@ -1,5 +1,13 @@
+import profileIcon from "./../../icons/profileIcon.svg"
+import homeIcon from './../../icons/homeIcon.svg'
+import settingsIcon from './../../icons/settingsIcon.svg'
+import likeIcon from './../../icons/likeIcon.svg'
+import supportIcon from './../../icons/supportIcon.svg'
 
-interface IRoute {
+
+
+
+export interface IRoute {
     path: string
     image: string
     title: string
@@ -10,31 +18,31 @@ export const routes: IRoute[] = [
     {
         path: "/setting",
         title: "Настройки",
-        image: "",
+        image: settingsIcon,
         status: "secondary"
     },
     {
-        path: "/profile",
+        path: "/me",
         title: "Профиль",
-        image: "",
+        image: profileIcon,
         status: "primary"
     },
     {
         path: "/likes",
         title: "Мои лайки",
-        image: "",
+        image: likeIcon,
         status: "primary"
     },
     {
         path: "/support",
         title: "Поддержка",
-        image: "",
+        image: supportIcon,
         status: "secondary"
     },
     {
         path: "/",
         title: "Лента",
-        image: "",
-        status: "secondary"
+        image: homeIcon,
+        status: "primary"
     }
 ]

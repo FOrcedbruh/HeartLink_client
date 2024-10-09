@@ -197,7 +197,7 @@
 
 
     .fourth {
-        width: 50%;
+        width: 70%;
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -225,7 +225,7 @@
                 width: 100%;
                 height: 60vh;
                 overflow-y: scroll;
-                overflow-x: scroll;
+                overflow-x: hidden;
                 display: flex;
                 flex-direction: column;
                 justify-content: start;

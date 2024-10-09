@@ -3,17 +3,24 @@ import styles from './Layout.module.scss'
 import Navbar from "../Navbar/Navbar";
 import { useAuthContext } from "../../../api/auth/authContext";
 import menuIcon from './../../../icons/MenuIcon.svg'
-import { motion } from "framer-motion";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import Menu from "../Menu/Menu";
 
 const Layout: React.FC = () => {
 
     const { authUser } = useAuthContext()
+    const [openMenu, setOpenMenu] = useState<boolean>(false)
 
     return (
         <section className={styles.window}>
+            <AnimatePresence>
+                {openMenu && <Menu />}
+            </AnimatePresence>
             <header className={styles.header}>
-                <motion.div whileHover={{scale: 1.2}} whileTap={{scale: 0.8}} className={styles.menu}><img src={menuIcon} alt="" width={30} height={30}/></motion.div>
+                {authUser && <motion.div onClick={() => setOpenMenu(!openMenu)} whileHover={{scale: 1.2}} whileTap={{scale: 0.8}} className={styles.menu}>
+                    <img src={menuIcon} alt="" width={30} height={30}/>
+                </motion.div>}
                 <div className={styles.logo}>
                     <h2 className={styles.anim_typewriter}>❤️HeartLink</h2>
                 </div>

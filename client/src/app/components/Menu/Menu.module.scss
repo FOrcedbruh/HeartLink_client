@@ -1,8 +1,70 @@
+@import "./../../../mixins/mixins.scss";
+
 .menu {
+    position: absolute;
+    align-self: flex-start;
+    z-index: 12;
     width: 300px;
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: start;
     align-items: center;
     background-color: #fff;
-    
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 7px 1px 33px -2px rgba(0, 0, 0, 0.2);
+    padding: 80px 20px 40px 20px;
+    gap: 40px;
+
+    .primaryOps {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        background-color: #eee;
+        border-radius: 14px;
+        padding: 10px;
+        gap: 12px;
+
+        p {
+            color: #a5a5a5;
+            margin: 0;
+            align-self: flex-start;
+            font-size: 14px;
+        }
+    }
+
+    .secondaryOps {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        background-color: #eee;
+        border-radius: 14px;
+        padding: 10px;
+        gap: 12px;
+
+        p {
+            color: #a5a5a5;
+            margin: 0;
+            align-self: flex-start;
+            font-size: 14px;
+        }
+    }
+
+    .option {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        border-radius: 10px;
+        text-decoration: none;
+    }
 }
