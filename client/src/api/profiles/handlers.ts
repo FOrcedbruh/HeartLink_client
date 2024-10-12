@@ -1,3 +1,4 @@
+import { IProfile } from "../../types/IProfile";
 import { instance } from "../instance";
 
 
@@ -29,6 +30,11 @@ class ProfileHandlers {
     }
     async update_photos() {
         
+    }
+    async feed(gender_in: string): Promise<any> {
+        const res = await instance.post("profile/feed", gender_in)
+
+        return res.data
     }
 }
 

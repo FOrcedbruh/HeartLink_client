@@ -6,6 +6,7 @@ import Profile from "./pages/Profile/Profile";
 import { LoaderComponent } from "./components/Loader/Loader";
 import CreateProfile from "./pages/Create/CreateProfile";
 import { useCreateStatus } from "./zustand/useCreateStatus";
+import Feed from "./pages/Feed/Feed";
 
 
 const App: React.FC = () => {
@@ -18,7 +19,7 @@ const App: React.FC = () => {
         <main className="main">
             <Routes>
                 <Route element={<Layout />}>
-                    <Route path="/" element={authUser ? <LoaderComponent /> : <Auth />}/>
+                    <Route path="/" element={authUser ? <Feed /> : <Auth />}/>
                     <Route path="/me" element={<Profile />}/>
                 </Route>
                 <Route path="/me/create" element={<CreateProfile step={stage} status="create"/>}/>
