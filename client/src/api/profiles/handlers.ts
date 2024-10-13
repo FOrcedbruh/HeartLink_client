@@ -36,6 +36,11 @@ class ProfileHandlers {
 
         return res.data
     }
+    async get_profile_stage(access_token: string): Promise<number> {
+        const res = await instance.post("profile/get_profile_stage", {}, {headers: {"Authorization": `Bearer ${access_token}`}})
+
+        return res.data
+    }
 }
 
 

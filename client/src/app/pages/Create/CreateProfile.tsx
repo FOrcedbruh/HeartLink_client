@@ -257,6 +257,17 @@ const CreateProfile: React.FC<ThisStatePropsType> = ({ step, status }) => {
     //@ts-ignore
     const access_token: string = localStorage.getItem("access_token")
 
+    const getStage = async () => {
+        const res = await PHandlers.get_profile_stage(access_token)
+
+        setStage(res)
+        console.log(res)
+    }
+
+    useEffect(() => {
+        getStage()
+    }, [])
+
 
     return (
         <section className={styles.window}>

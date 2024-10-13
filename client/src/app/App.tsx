@@ -3,17 +3,17 @@ import Layout from "./components/Layout/Layout";
 import { useAuthContext } from "../api/auth/authContext";
 import Auth from "./components/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
-import { LoaderComponent } from "./components/Loader/Loader";
 import CreateProfile from "./pages/Create/CreateProfile";
-import { useCreateStatus } from "./zustand/useCreateStatus";
 import Feed from "./pages/Feed/Feed";
+import { PHandlers } from "../api/profiles/handlers";
+import { useEffect, useState } from "react";
 
 
 const App: React.FC = () => {
 
     const { authUser } = useAuthContext()
 
-    const { stage } = useCreateStatus()
+
 
     return (
         <main className="main">
@@ -22,7 +22,7 @@ const App: React.FC = () => {
                     <Route path="/" element={authUser ? <Feed /> : <Auth />}/>
                     <Route path="/me" element={<Profile />}/>
                 </Route>
-                <Route path="/me/create" element={<CreateProfile step={stage} status="create"/>}/>
+                <Route path="/me/create" element={<CreateProfile step={0} status="create"/>}/>
             </Routes>
         </main>
     )

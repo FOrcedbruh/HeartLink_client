@@ -1,9 +1,9 @@
 import styles from './Profile.module.scss'
 import { useAuthContext } from '../../../api/auth/authContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { IProfile } from '../../../types/IProfile'
 import { IUser } from '../../../types/IUser'
-import { setEndAge, checkProfileKeys } from '../../../utils/utils'
+import { setEndAge } from '../../../utils/utils'
 import { Hobby } from '../../components/Hobby/Hobby'
 import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
@@ -30,9 +30,6 @@ const Profile: React.FC = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
 
     const navigate = useNavigate()
-
-    
-
 
     useEffect(() => {
         if (authUser) {
@@ -128,7 +125,7 @@ const Profile: React.FC = () => {
                         <textarea disabled value={profile?.bio} name="bio" className={styles.textarea}>
                         </textarea>
                     </div>}
-                    {checkProfileKeys(profile) && <div>
+                   {!profile.bio && <div>
                         <Button onClick={() => navigate("/me/create")} type='button' width='300px'>Продолжить настройку профиля</Button>
                     </div>}
                 </motion.div>
