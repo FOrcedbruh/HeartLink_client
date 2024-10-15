@@ -9,9 +9,9 @@ import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCube, Pagination } from 'swiper/modules';
+import { EffectCube, EffectFade, Pagination } from 'swiper/modules';
 import 'swiper/scss';
-import 'swiper/scss/effect-cube';
+import 'swiper/scss/effect-fade';
 import 'swiper/scss/pagination';
 import plusIcon from './../../../icons/plusIcon.svg'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -61,9 +61,6 @@ const Profile: React.FC = () => {
     if (!authUser) {
         return <LoaderWindow />
     }
-
-
-    
     
 
     return (
@@ -78,13 +75,15 @@ const Profile: React.FC = () => {
                     </div>
                 </motion.div>
                 {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
-                   {profile?.profileImages 
+                   {profile?.profileImages?.length > 0
                    // if not profile images logics
                     ? 
-                    <Swiper pagination={true} className={styles.swiper} cubeEffect={{shadow: false}} effect={'cube'} grabCursor={true} modules={[EffectCube, Pagination]}>
-                            <SwiperSlide>slide 1</SwiperSlide>
-                            <SwiperSlide>slide 2</SwiperSlide>
-                            <SwiperSlide>slide 3</SwiperSlide>
+                    <Swiper pagination={true} className={styles.swiper} cubeEffect={{shadow: false}} effect={'fade'} grabCursor={true} modules={[EffectFade, Pagination]}>
+                            {profile.profileImages.map(image => {
+                               return (
+                                <SwiperSlide key={image} className={styles.slide}><img src={image} alt="" /></SwiperSlide>
+                               )
+                            })}
                     </Swiper>
                     :
                     <motion.div onClick={() => setModalOpen(true)} whileHover={{scale: 1.06, rotate: 6}} className={styles.notSwiper}>

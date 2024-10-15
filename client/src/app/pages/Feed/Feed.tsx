@@ -13,10 +13,10 @@ const Feed: React.FC = () => {
 
     const getFeed = async () => {
         if (authUser.profile.data.gender === "Мужчина") {
-            const res = await PHandlers.feed("FEMALE")
+            const res = await PHandlers.feed("MALE")
             console.log(res)
         } else {
-            const res = await PHandlers.feed("MALE")
+            const res = await PHandlers.feed("FEMALE")
             console.log(res)
         }
     }
