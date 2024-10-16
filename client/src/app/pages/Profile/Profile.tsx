@@ -24,6 +24,9 @@ const Profile: React.FC = () => {
 
     const { authUser, setAuthUser } = useAuthContext()
 
+    //@ts-ignore
+    const access_token: string = localStorage.getItem("access_token")
+
     const [profile, setProfile] = useState<IProfile | null>(null)
     const [user, setUser] = useState<IUser | null>(null)
 
@@ -66,7 +69,7 @@ const Profile: React.FC = () => {
     return (
         <section className={styles.window}>
             <AnimatePresence>
-                {modalOpen && <ModalFiles setModalOpen={setModalOpen}/>}
+                {modalOpen && <ModalFiles access_token={access_token} setModalOpen={setModalOpen}/>}
             </AnimatePresence>
             <div className={styles.userData}>
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.userWrapper}>
