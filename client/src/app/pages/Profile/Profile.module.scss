@@ -91,10 +91,9 @@
                 li {
                     width: 100%;
                     display: flex;
-                    padding: 5px 30px;
+                    padding: 10px 30px;
                     border-radius: 10px;
                     background-color: $bg_color;
-                    border: 2px solid $primary_color;
                     h3 {
                         padding: 0;
                         margin: 0;
@@ -172,11 +171,14 @@
 }
 .swiper_wrapper {
     align-self: flex-start;
-    width: 30%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: fit-content;
 
     @media only screen and (max-width: 1100px) {
-        width: 80%;
+        width: 100%;
         align-self: center;
     }
     .swiper {
@@ -201,7 +203,7 @@
 
     .notSwiper {
         background-color: $primary_color;
-        width: 100%;
+        width: 70%;
         height: 50vh;
         border-radius: 16px;
         display: flex;

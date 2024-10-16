@@ -15,7 +15,6 @@ const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token }) =>
 
     const [images, setImages] = useState<File[]>([]);
     const filesRef = useRef<HTMLInputElement>(null)
-    const [formData, setFormData] = useState<any>(new FormData())
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         //@ts-ignore
@@ -27,9 +26,12 @@ const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token }) =>
     }
 
     const update_images = async () => {
+        const formData = new FormData()
+
         for (let i = 0; i < images.length; i++) {
             formData.append("files", images[i])
         }
+        
         const res = await PHandlers.update_photos(formData, access_token)
         console.log(res)
     }

@@ -18,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { LoaderWindow } from '../../components/Loader/Loader'
 import logoutIcon from './../../../icons/logout.svg'
 import { ModalFiles } from './ModalFiles/ModalFiles'
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal'
 
 
 const Profile: React.FC = () => {
@@ -31,6 +32,7 @@ const Profile: React.FC = () => {
     const [user, setUser] = useState<IUser | null>(null)
 
     const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [logoutConfirm, setLogoutConfirm] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
@@ -69,14 +71,12 @@ const Profile: React.FC = () => {
     return (
         <section className={styles.window}>
             <AnimatePresence>
+                {logoutConfirm && <ConfirmModal variant="primary" text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
+            </AnimatePresence>
+            <AnimatePresence>
                 {modalOpen && <ModalFiles access_token={access_token} setModalOpen={setModalOpen}/>}
             </AnimatePresence>
             <div className={styles.userData}>
-                <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.userWrapper}>
-                    <div className={styles.user}>
-                            <h3>Ваш тег: <span>{user?.username}</span></h3>
-                    </div>
-                </motion.div>
                 {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
                    {profile?.profileImages?.length > 0
                    // if not profile images logics
@@ -141,7 +141,7 @@ const Profile: React.FC = () => {
                 }
             </div>
             <div className={styles.controller}>
-                <Button onClick={logout} type='button' width='200px'>
+                <Button onClick={() => setLogoutConfirm(true)} type='button' width='200px'>
                     <p>Выйти</p> <img src={logoutIcon} width={24} height={24} alt="" />
                 </Button>
             </div>
