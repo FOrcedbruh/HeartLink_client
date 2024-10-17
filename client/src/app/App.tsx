@@ -5,8 +5,7 @@ import Auth from "./components/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 import CreateProfile from "./pages/Create/CreateProfile";
 import Feed from "./pages/Feed/Feed";
-import { PHandlers } from "../api/profiles/handlers";
-import { useEffect, useState } from "react";
+import SupportPage from "./pages/SupportPage/SupportPage";
 
 
 const App: React.FC = () => {
@@ -21,6 +20,7 @@ const App: React.FC = () => {
                 <Route element={<Layout />}>
                     <Route path="/" element={authUser ? <Feed /> : <Auth />}/>
                     <Route path="/me" element={<Profile />}/>
+                    <Route path="/support" element={<SupportPage />}/>
                 </Route>
                 <Route path="/me/create" element={<CreateProfile step={0} status="create"/>}/>
             </Routes>

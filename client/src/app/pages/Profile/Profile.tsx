@@ -71,7 +71,7 @@ const Profile: React.FC = () => {
     return (
         <section className={styles.window}>
             <AnimatePresence>
-                {logoutConfirm && <ConfirmModal variant="primary" text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
+                {logoutConfirm && <ConfirmModal confirmBtnText='Выйти' variant="primary" text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
             </AnimatePresence>
             <AnimatePresence>
                 {modalOpen && <ModalFiles access_token={access_token} setModalOpen={setModalOpen}/>}
@@ -100,7 +100,7 @@ const Profile: React.FC = () => {
                 ?
                 <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.profile}>
                     <h1>Ваш профиль</h1>
-
+                    <p className={styles.tag}>@{user?.username}</p>
                     <ul>
                         <li>
                            <h2>{profile?.firstname} {profile?.surname} </h2> {profile.age && <h2>{profile?.age} {setEndAge(Number(profile?.age))}</h2>}
