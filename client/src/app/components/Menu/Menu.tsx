@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { IRoute, routes } from '../../../utils/routes/routes';
 import styles from './Menu.module.scss'
 import { motion } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
 
 
 
@@ -11,8 +12,11 @@ const Option: React.FC<IRoute> = ({ title, path, image, status}) => {
     )
 }
 
+interface MenuPropsType {
+    setOpenMenu: Dispatch<SetStateAction<boolean>>
+}
 
-const Menu: React.FC = () => {
+const Menu: React.FC<MenuPropsType> = ({ setOpenMenu }) => {
 
     
     const primaryOptions: IRoute[] = routes.filter(route => route.status === "primary")
@@ -20,7 +24,7 @@ const Menu: React.FC = () => {
 
     return (
         <motion.aside initial={{opacity: 0, x: -300}} animate={{opacity: 1, x: 0, transition: { duration: 0.2 }}} exit={{x: -300, opacity: 0}} className={styles.menu}>
-            <div className={styles.primaryOps}>
+            <div onClick={() => setOpenMenu(false)} className={styles.primaryOps}>
                 <p>Основные</p>
                 {primaryOptions.map(option => {
                     return (
@@ -28,7 +32,7 @@ const Menu: React.FC = () => {
                     )
                 })}
             </div>
-            <div className={styles.secondaryOps}>
+            <div onClick={() => setOpenMenu(false)} className={styles.secondaryOps}>
                 <p>Дополнительные</p>
                 {secondaryOptions.map(option => {
                     return (

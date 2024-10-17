@@ -6,11 +6,15 @@ export interface IQuestion {
 
 export const faqlist: IQuestion[] = [
     {
-        title: "Тенологии проекта",
+        title: "Технологии проекта",
         text: "some text"
     },
     {
         title: "Политика конфиденциальности",
         text: "some text"
+    },
+    {
+        title: "Для кого это приложение?",
+        text: "Для тех, кто хочет познакомиться и имеет традиционные ценности"
     }
 ]

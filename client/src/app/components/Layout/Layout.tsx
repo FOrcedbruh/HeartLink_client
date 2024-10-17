@@ -15,7 +15,7 @@ const Layout: React.FC = () => {
     return (
         <section className={styles.window}>
             <AnimatePresence>
-                {openMenu && <Menu />}
+                {openMenu && <Menu setOpenMenu={setOpenMenu}/>}
             </AnimatePresence>
             <header className={styles.header}>
                 {authUser && <motion.div onClick={() => setOpenMenu(!openMenu)} whileHover={{scale: 1.2}} whileTap={{scale: 0.8}} className={styles.menu}>

@@ -36,45 +36,72 @@
             }
         }
 
-        div.accordion {
-            margin-top: 10vh;
+        .faq {
+            margin-top: 5vh;
             width: 70%;
-            height: fit-content;
             display: flex;
-            justify-content: start;
+            justify-content: center;
             align-items: center;
             flex-direction: column;
-            background-color: #fff;
-            border-radius: 20px;
-            padding: 20px;
+            gap: 10px;
 
-            .accordionItem {
+            h2 {
+                margin: 0;
+                padding: 0;
+                align-self: flex-start;
+            }
+
+            div.accordion {
                 width: 100%;
                 height: fit-content;
                 display: flex;
-                flex-direction: column;
                 justify-content: start;
-                gap: 20px;
-                align-items: start;
+                align-items: center;
+                flex-direction: column;
+                background-color: #fff;
+                border-radius: 20px;
                 padding: 20px;
-                user-select: none;
-                cursor: pointer;
-                border-bottom: 2px solid #eee;
-
-                &:last-child {
-                    border: none;
-                }
-
-                h1 {
-                    margin: 0;
-                    padding: 0;
-                    font-size: 24px;
-                }
-                p {
-                    margin: 0;
-                    padding: 0;
+    
+    
+                .accordionItem {
+                    width: 100%;
+                    height: fit-content;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: start;
+                    gap: 20px;
+                    align-items: start;
+                    padding: 20px;
+                    user-select: none;
+                    cursor: pointer;
+                    border-bottom: 2px solid #eee;
+    
+                    &:last-child {
+                        border: none;
+                    }
+    
+                    h1 {
+                        margin: 0;
+                        padding: 0;
+                        font-size: 24px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+    
+                        img {
+                            transition: all .3s ease;
+                        }
+                    }
+                    p {
+                        margin: 0;
+                        padding: 0;
+                    }
                 }
             }
+            
         }
+
+        
     }
 }
