@@ -5,6 +5,7 @@ import { Button } from '../../../components/Button/Button'
 import imageIcon from './../../../../icons/imageIcon.svg'
 import closeIcon from './../../../../icons/closeIcon.svg'
 import { PHandlers } from '../../../../api/profiles/handlers'
+import { useMessage } from '../../../zustand/useMessage'
 
 interface ModalPropsType {
     setModalOpen: Dispatch<SetStateAction<boolean>>,
@@ -12,6 +13,8 @@ interface ModalPropsType {
 }
 
 const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token }) => {
+
+    const { setMessage } = useMessage()
 
     const [images, setImages] = useState<File[]>([]);
     const filesRef = useRef<HTMLInputElement>(null)
@@ -26,7 +29,7 @@ const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token }) =>
     }
 
     const update_images = async () => {
-        const formData = new FormData()
+        let formData = new FormData()
 
         for (let i = 0; i < images.length; i++) {
             formData.append("files", images[i])
@@ -34,6 +37,9 @@ const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token }) =>
         
         const res = await PHandlers.update_photos(formData, access_token)
         console.log(res)
+
+        setModalOpen(false)
+        setMessage(res.detail)
     }
     
     return (

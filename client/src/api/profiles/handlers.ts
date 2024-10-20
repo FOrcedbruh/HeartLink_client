@@ -1,3 +1,4 @@
+import axios from "axios";
 import { instance } from "../instance";
 
 
@@ -26,17 +27,17 @@ class ProfileHandlers {
 
         return res.data
     }
-    async update_photos(images: any, access_token: string): Promise<any> {
-        const res = fetch("http://127.0.0.1:8080/api/v1/profile/update_photos", {
-            method: "PATCH",
-            body: images,
-            headers: {
-                "Authorization": `Bearer ${access_token}`,
-                "Content-Type": "multipart/form-data"
-            }
-        })
+    async update_photos(formData: any, access_token: string): Promise<any> {
+       const res = await instance.patch("profile/update_photos", 
+        formData
+        , {
+        headers: {
+            "Authorization": `Bearer ${access_token}`,
+            "Content-Type": "multipart/form-data"
+        }
+       })
 
-        return res
+       return res.data
     }
     async feed(gender_in: string): Promise<any> {
         const res = await instance.post("profile/feed", gender_in)
