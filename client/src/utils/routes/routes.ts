@@ -16,7 +16,7 @@ export interface IRoute {
 
 export const routes: IRoute[] = [
     {
-        path: "/setting",
+        path: "/settings",
         title: "Настройки",
         image: settingsIcon,
         status: "secondary"
