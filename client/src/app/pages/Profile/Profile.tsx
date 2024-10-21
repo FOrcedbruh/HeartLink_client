@@ -19,9 +19,14 @@ import { LoaderWindow } from '../../components/Loader/Loader'
 import logoutIcon from './../../../icons/logout.svg'
 import { ModalFiles } from './ModalFiles/ModalFiles'
 import ConfirmModal from '../../components/ConfirmModal/ConfirmModal'
-
+import trashIcon from './../../../icons/trashIcon.svg'
+import { PHandlers } from '../../../api/profiles/handlers'
+import { useMessage } from '../../zustand/useMessage'
 
 const Profile: React.FC = () => {
+
+    const { setMessage } = useMessage()
+    const [imageTools, setImageTools] = useState<boolean>(false)
 
     const { authUser, setAuthUser } = useAuthContext()
 
@@ -63,6 +68,23 @@ const Profile: React.FC = () => {
         }
     }
 
+    const deleteImagesHandler = async (filename: string) => {
+
+        const filenames: string[] = [filename]
+        const res = await PHandlers.delete_photos(filenames, access_token)
+
+        if (res.status === 200) {
+            setMessage(res.message)
+            localStorage.removeItem("auser")
+            const data = await AHandlers.me(access_token)
+            //@ts-ignore
+            setAuthUser(data)
+            localStorage.setItem("auser", JSON.stringify(data))
+        } else {
+            setMessage("Ошибка на сервере")
+        }
+    }
+
     if (!authUser) {
         return <LoaderWindow />
     }
@@ -79,12 +101,24 @@ const Profile: React.FC = () => {
             <div className={styles.userData}>
                 {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
                    {profile?.profileImages?.length > 0
-                   // if not profile images logics
                     ? 
                     <Swiper pagination={true} className={styles.swiper} cubeEffect={{shadow: false}} effect={'fade'} grabCursor={true} modules={[EffectFade, Pagination]}>
                             {profile.profileImages.map(image => {
                                return (
-                                <SwiperSlide key={image} className={styles.slide}><img src={image} alt="" /></SwiperSlide>
+                                <SwiperSlide 
+                                    onMouseOver={() => setImageTools(true)} 
+                                    onMouseOut={() => setImageTools(false)}
+                                    key={image}
+                                    className={styles.slide}><img src={image} alt="" />
+                                    <AnimatePresence>{imageTools && <motion.div 
+                                        initial={{opacity: 0, scale: 0}}
+                                        animate={{opacity: 1, scale: 1}}
+                                        exit={{opacity: 0, scale: 0}} 
+                                        whileTap={{scale: 0.8}} 
+                                        whileHover={{scale: 1.2}} 
+                                        className={styles.deleteBtn}onClick={() => deleteImagesHandler(image)}>
+                                            <img  src={trashIcon} 
+                                            width={100} height={10} alt="" /></motion.div>}</AnimatePresence></SwiperSlide>
                                )
                             })}
                     </Swiper>

@@ -193,8 +193,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 60vh;
-        width: 100%;
+        height: 50vh;
+        width:800%;
 
         .slide {
             display: flex;
@@ -206,12 +206,29 @@
                 height: 100%;
                 border-radius: 20px;
             }
+
+
+            .deleteBtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                align-self: flex-start;
+                margin-left: 90%;
+                margin-top: 2%;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: rgb(255, 99, 99);
+                z-index: 10;
+                cursor: pointer;
+            }
         }
     }
 
     .notSwiper {
         background-color: $primary_color;
-        width: 70%;
+        width: 80%;
         height: 50vh;
         border-radius: 16px;
         display: flex;

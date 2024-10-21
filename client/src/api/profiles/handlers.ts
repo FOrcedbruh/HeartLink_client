@@ -1,4 +1,3 @@
-import axios from "axios";
 import { instance } from "../instance";
 
 
@@ -28,7 +27,7 @@ class ProfileHandlers {
         return res.data
     }
     async update_photos(formData: any, access_token: string): Promise<any> {
-       const res = await instance.patch("profile/update_photos", 
+       const res = await instance.patch("profile/update/images", 
         formData
         , {
         headers: {
@@ -38,6 +37,13 @@ class ProfileHandlers {
        })
 
        return res.data
+    }
+    async delete_photos(filenames: string[], access_token: string): Promise<any> {
+        const res = await instance.post("profile/delete/images", filenames, {
+            headers: {"Authorization": `Bearer ${access_token}`}
+        })
+
+        return res.data
     }
     async feed(gender_in: string): Promise<any> {
         const res = await instance.post("profile/feed", gender_in)
