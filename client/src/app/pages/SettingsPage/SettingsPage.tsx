@@ -6,14 +6,13 @@ import { useState } from 'react'
 
 
 
-const SettingsItem: React.FC<ISetting> = ({ title, onAction}) => {
+const SettingsItem: React.FC<ISetting> = ({ title, onAction, thumbState }) => {
 
-    const [thumb, setThumb] = useState<boolean>(false)
 
     return (
         <li>
             <p>{title}</p>
-            <div style={{"backgroundColor": thumb ? "chartreuse": "#eee", "justifyContent": thumb ? "end" : "start"}} onClick={onAction} onMouseUp={() => setThumb(!thumb)} className={styles.toggleBtn}>
+            <div style={{"backgroundColor": !thumbState ? "chartreuse": "#eee", "justifyContent": !thumbState ? "end" : "start"}} onClick={onAction} className={styles.toggleBtn}>
                 <motion.div></motion.div>
             </div>
         </li>
@@ -30,11 +29,13 @@ const SettingsPage: React.FC = () => {
     const settings: ISetting[] = [
         {
             title: "Отключить динамический navbar",
-            onAction: () => setViewNavbar(!viewNavbar)
+            onAction: () => setViewNavbar(!viewNavbar),
+            thumbState: viewNavbar
         },
         {
             title: "Офоромление",
-            onAction: () => console.log("hi")
+            onAction: () => console.log("hi"),
+            thumbState: false
         }
     ]
 
@@ -59,7 +60,7 @@ const SettingsPage: React.FC = () => {
             <ul className={styles.settings}>
                 {settings.map(item => {
                     return (
-                        <SettingsItem key={item.title} title={item.title} onAction={item.onAction}/>
+                        <SettingsItem key={item.title} thumbState={item.thumbState} title={item.title} onAction={item.onAction}/>
                     )
                 })}
             </ul>

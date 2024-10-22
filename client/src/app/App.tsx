@@ -1,12 +1,15 @@
+import { lazy, Suspense } from "react";
+
 import { Routes, Route } from "react-router-dom";
+const Feed = lazy(() => import("./pages/Feed/Feed"))
 import Layout from "./components/Layout/Layout";
 import { useAuthContext } from "../api/auth/authContext";
-import Auth from "./components/Auth/Auth";
-import Profile from "./pages/Profile/Profile";
-import CreateProfile from "./pages/Create/CreateProfile";
-import Feed from "./pages/Feed/Feed";
-import SupportPage from "./pages/SupportPage/SupportPage";
-import SettingsPage from "./pages/SettingsPage/SettingsPage";
+const Auth = lazy(() => import("./components/Auth/Auth"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const CreateProfile = lazy(() => import("./pages/Create/CreateProfile"))
+const SupportPage = lazy(() => import("./pages/SupportPage/SupportPage"))
+const SettingsPage = lazy(() => import("./pages/SettingsPage/SettingsPage"))
+import { LoaderWindow } from "./components/Loader/Loader";
 
 
 const App: React.FC = () => {
@@ -19,12 +22,12 @@ const App: React.FC = () => {
         <main className="main">
             <Routes>
                 <Route element={<Layout />}>
-                    <Route path="/" element={authUser ? <Feed /> : <Auth />}/>
-                    <Route path="/me" element={<Profile />}/>
-                    <Route path="/support" element={<SupportPage />}/>
-                    <Route path="/settings" element={<SettingsPage />}/>
+                    <Route path="/" element={authUser ? <Suspense fallback={<LoaderWindow />}><Feed /></Suspense> : <Suspense fallback={<LoaderWindow />}><Auth /></Suspense>}/>
+                    <Route path="/me" element={<Suspense fallback={<LoaderWindow />}><Profile /></Suspense>}/>
+                    <Route path="/support" element={<Suspense fallback={<LoaderWindow />}><SupportPage /></Suspense>}/>
+                    <Route path="/settings" element={<Suspense fallback={<LoaderWindow />}><SettingsPage /></Suspense>}/>
                 </Route>
-                <Route path="/me/create" element={<CreateProfile step={0} status="create"/>}/>
+                <Route path="/me/create" element={<Suspense fallback={<LoaderWindow />}><CreateProfile step={0} status="create" /></Suspense>}/>
             </Routes>
         </main>
     )

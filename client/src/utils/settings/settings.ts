@@ -2,5 +2,6 @@
 
 export interface ISetting {
     title: string,
-    onAction: () => void
+    onAction: () => void,
+    thumbState: boolean
 }
