@@ -1,14 +1,19 @@
 import styles from './SettingsPage.module.scss'
 import { motion } from 'framer-motion'
-import { ISetting, settings } from '../../../utils/settings/settings'
+import { ISetting } from '../../../utils/settings/settings'
 import { useViewNavbar } from '../../zustand/settings/useViewNavbar'
+import { useState } from 'react'
+
 
 
 const SettingsItem: React.FC<ISetting> = ({ title, onAction}) => {
+
+    const [thumb, setThumb] = useState<boolean>(false)
+
     return (
         <li>
             <p>{title}</p>
-            <div onClick={onAction} className={styles.toggleBtn}>
+            <div style={{"backgroundColor": thumb ? "chartreuse": "#eee", "justifyContent": thumb ? "end" : "start"}} onClick={onAction} onMouseUp={() => setThumb(!thumb)} className={styles.toggleBtn}>
                 <motion.div></motion.div>
             </div>
         </li>
@@ -17,9 +22,21 @@ const SettingsItem: React.FC<ISetting> = ({ title, onAction}) => {
 
 
 
+
 const SettingsPage: React.FC = () => {
 
     const { setViewNavbar, viewNavbar } = useViewNavbar()
+
+    const settings: ISetting[] = [
+        {
+            title: "Отключить динамический navbar",
+            onAction: () => setViewNavbar(!viewNavbar)
+        },
+        {
+            title: "Офоромление",
+            onAction: () => console.log("hi")
+        }
+    ]
 
     document.title = "Настройки"
 

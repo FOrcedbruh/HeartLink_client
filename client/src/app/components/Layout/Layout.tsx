@@ -6,11 +6,13 @@ import menuIcon from './../../../icons/MenuIcon.svg'
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Menu from "../Menu/Menu";
+import { useViewNavbar } from "../../zustand/settings/useViewNavbar";
 
 const Layout: React.FC = () => {
 
     const { authUser } = useAuthContext()
     const [openMenu, setOpenMenu] = useState<boolean>(false)
+    const { viewNavbar } = useViewNavbar()
 
     return (
         <section className={styles.window}>
@@ -28,7 +30,7 @@ const Layout: React.FC = () => {
             <article className={styles.container}>
                 <Outlet />
             </article>
-            {authUser && <Navbar />}
+            {(authUser && viewNavbar) && <Navbar />}
         </section>
     )
 }

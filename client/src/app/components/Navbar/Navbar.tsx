@@ -43,7 +43,6 @@ const Navbar: React.FC = () => {
                     <motion.li variants={variants} initial={"initial"} animate={"animate"} exit={"exit"} whileTap={{scale: 1.1}} whileHover={{scale: 1.4}}><Link to={"/me"}><img src={profileIcon} width={30} height={30} alt="" /></Link></motion.li>
                 </ul> : <div className={styles.hidden}></div>}
             </AnimatePresence>
-            
         </nav>
     )
 }
