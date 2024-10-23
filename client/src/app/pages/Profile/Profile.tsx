@@ -9,7 +9,7 @@ import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCube, EffectFade, Pagination } from 'swiper/modules';
+import { EffectFade, Pagination } from 'swiper/modules';
 import 'swiper/scss';
 import 'swiper/scss/effect-fade';
 import 'swiper/scss/pagination';
@@ -96,7 +96,7 @@ const Profile: React.FC = () => {
                 {logoutConfirm && <ConfirmModal confirmBtnText='Выйти' variant="primary" text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
             </AnimatePresence>
             <AnimatePresence>
-                {modalOpen && <ModalFiles access_token={access_token} setModalOpen={setModalOpen}/>}
+                {modalOpen && <ModalFiles modalOpen={modalOpen} access_token={access_token} setModalOpen={setModalOpen}/>}
             </AnimatePresence>
             <div className={styles.userData}>
                 {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
