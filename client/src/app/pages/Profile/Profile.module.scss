@@ -200,29 +200,39 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #fff;
+            border-radius: 20px;
 
             img {
-                width: 100%;
-                height: 100%;
+                width: 60%;
+                height: auto;
+                max-width: 100%;
                 border-radius: 20px;
             }
 
-
-            .deleteBtn {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            .tools {
                 position: absolute;
-                align-self: flex-start;
                 margin-left: 90%;
                 margin-top: 2%;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background-color: rgb(255, 99, 99);
-                z-index: 10;
-                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-content: center;
+                gap: 10px;
+                align-self: flex-start;
+
+                .toolBtn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    z-index: 10;
+                    cursor: pointer;
+                }
             }
+            
         }
     }
 

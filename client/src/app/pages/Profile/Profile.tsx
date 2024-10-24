@@ -106,19 +106,36 @@ const Profile: React.FC = () => {
                             {profile.profileImages.map(image => {
                                return (
                                 <SwiperSlide 
-                                    onMouseOver={() => setImageTools(true)} 
+                                    onMouseOver={() => setImageTools(true)}
                                     onMouseOut={() => setImageTools(false)}
                                     key={image}
                                     className={styles.slide}><img src={image} alt="" />
-                                    <AnimatePresence>{imageTools && <motion.div 
-                                        initial={{opacity: 0, scale: 0}}
-                                        animate={{opacity: 1, scale: 1}}
-                                        exit={{opacity: 0, scale: 0}} 
-                                        whileTap={{scale: 0.8}} 
-                                        whileHover={{scale: 1.2}} 
-                                        className={styles.deleteBtn}onClick={() => deleteImagesHandler(image)}>
+                                    <AnimatePresence>{imageTools && <motion.div
+                                        className={styles.tools}>
+                                            <motion.div 
+                                                style={{"backgroundColor": "#ff6363"}}
+                                                initial={{opacity: 0, scale: 0}}
+                                                animate={{opacity: 1, scale: 1}}
+                                                exit={{opacity: 0, scale: 0}} 
+                                                whileTap={{scale: 0.8}} 
+                                                whileHover={{scale: 1.2}}
+                                                className={styles.toolBtn}onClick={() => deleteImagesHandler(image)}>
                                             <img  src={trashIcon} 
-                                            width={100} height={10} alt="" /></motion.div>}</AnimatePresence></SwiperSlide>
+                                            width={10} height={10} alt="" />
+                                                </motion.div>
+                                                <motion.div
+                                                    onClick={() => setModalOpen(true)}
+                                                    style={{"backgroundColor": "chartreuse"}}
+                                                    className={styles.toolBtn}
+                                                    initial={{opacity: 0, scale: 0}}
+                                                    animate={{opacity: 1, scale: 1}}
+                                                    exit={{opacity: 0, scale: 0}} 
+                                                    whileTap={{scale: 0.8}}
+                                                    whileHover={{scale: 1.2}}>
+                                                        <img src={plusIcon} alt="" width={10} height={10}/>
+                                                    </motion.div>
+                                            </motion.div>}
+                                    </AnimatePresence></SwiperSlide>
                                )
                             })}
                     </Swiper>
