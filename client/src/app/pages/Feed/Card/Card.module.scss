@@ -1,18 +1,29 @@
+@import "./../../../../mixins/mixins.scss";
+
+
 .card {
-    width: 100%;
+    width: 60%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 20px;
     border-radius: 16px;
+    background-color: #fff;
 
 
     .imagesSlider {
         width: 100%;
-        height: 80%;
+        height: 70%;
         background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        padding: 20px;
+        --swiper-navigation-color: #000;
+
+       
 
         .image {
             width: 100%;
@@ -20,13 +31,43 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
+            border-radius: 16px;
+            padding: 10px;
+
+            div.next {
+                width: 50%;
+                height: 100%;
+                align-self: flex-end;
+                position: absolute;
+                overflow: hidden;
+            }
+            div.prev {
+                width: 50%;
+                height: 100%;
+                align-self: flex-start;
+                position: absolute;
+                overflow: hidden;
+            }
 
             img {
-                width: 100%;
+                width: auto;
                 height: auto;
                 border: 12px;
+                max-height: 100%;
+                max-width: 100%;
+                border-radius: 10px;
             }
         }
+    }
+
+    .info {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
     }
 }
 
