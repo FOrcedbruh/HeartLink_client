@@ -24,6 +24,8 @@ const SettingsItem: React.FC<ISetting> = ({ title, onAction, thumbState }) => {
 
 const SettingsPage: React.FC = () => {
 
+    document.title = 'HeartLink | Настройки'
+
     const { setViewNavbar, viewNavbar } = useViewNavbar()
 
     const settings: ISetting[] = [
@@ -33,13 +35,11 @@ const SettingsPage: React.FC = () => {
             thumbState: viewNavbar
         },
         {
-            title: "Офоромление",
+            title: "Оформление",
             onAction: () => console.log("hi"),
             thumbState: false
         }
     ]
-
-    document.title = "Настройки"
 
     const variants = {
         initial: {

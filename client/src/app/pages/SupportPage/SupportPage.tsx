@@ -20,7 +20,7 @@ const AccordionItem: React.FC<IQuestion> = ({ title, text }) => {
 
 const SupportPage: React.FC = () => {
 
-    document.title = "Поддержка HeartLink"
+    document.title = "HeartLink | Поддержка"
 
     const variants = {
         initial: {

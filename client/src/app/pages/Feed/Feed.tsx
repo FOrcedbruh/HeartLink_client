@@ -4,28 +4,27 @@ import { useAuthContext } from '../../../api/auth/authContext';
 import { useEffect, useState } from 'react';
 import { Card } from './Card/Card';
 import { IProfile } from '../../../types/IProfile';
-import "swiper/scss"
 import { LoaderComponent } from '../../components/Loader/Loader';
-
 
 
 
 
 const Feed: React.FC = () => {
     
+    document.title = "HeartLink | Главная"
 
     const { authUser } = useAuthContext()
-    const [profile, setProfile] = useState<IProfile | null>(null)
+    const [profiles, setProfiles] = useState<IProfile[]>([])
 
 
 
     const getFeed = async () => {
         if (authUser.profile.data.gender === "Мужчина") {
             const res = await PHandlers.feed("MALE")
-            setProfile(res.profile)
+            setProfiles(res.profiles)
         } else {
             const res = await PHandlers.feed("FEMALE")
-            setProfile(res.profile)
+            setProfiles(res.profiles)
         }
     }
 
@@ -36,7 +35,7 @@ const Feed: React.FC = () => {
     return (
         <section className={styles.feed}>
             <div className={styles.container}>
-                {profile ? <Card profile={profile}/> : <LoaderComponent />}
+                {profiles.length && <Card profile={profiles[0]}/>}
             </div>
         </section>
     )

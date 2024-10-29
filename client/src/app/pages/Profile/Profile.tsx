@@ -25,6 +25,8 @@ import { useMessage } from '../../zustand/useMessage'
 
 const Profile: React.FC = () => {
 
+    document.title = "HeartLink | Аккаунт"
+
     const { setMessage } = useMessage()
     const [imageTools, setImageTools] = useState<boolean>(false)
 

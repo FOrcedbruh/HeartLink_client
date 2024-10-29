@@ -8,7 +8,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 const Option: React.FC<IRoute> = ({ title, path, image, status}) => {
     return (
-        <Link style={{"backgroundColor": status === "primary" ? "#fff" : "#8576FF", "color": status==="secondary" ? "#fff" : "#8576FF"}} className={styles.option} to={path}>{title} <img src={image} alt="" width={24} height={24}/></Link>
+        <Link style={{"backgroundColor": status === "primary" ? "#fff" : "#000", "color": status==="secondary" ? "#fff" : "#000"}} className={styles.option} to={path}>{title} <img src={image} alt="" width={24} height={24}/></Link>
     )
 }
 

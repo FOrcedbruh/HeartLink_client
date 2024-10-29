@@ -7,6 +7,7 @@ import "swiper/scss/scrollbar"
 import { IProfile } from '../../../../types/IProfile';
 import { Hobby } from '../../../components/Hobby/Hobby';
 import { useRef } from 'react';
+import { setEndAge } from '../../../../utils/utils';
 
 
 
@@ -29,7 +30,7 @@ const Card: React.FC<ICardProps> = ({ profile }) => {
 
     return (
         <section className={styles.card}>
-           <Swiper ref={sliderRef} scrollbar={{}} effect='fade' modules={[EffectFade, Scrollbar]} className={styles.imagesSlider}>
+           <Swiper allowTouchMove={false} ref={sliderRef} scrollbar={{}} effect='fade' modules={[EffectFade, Scrollbar]} className={styles.imagesSlider}>
                 {profile.profileImages.map(image => {
                     return (
                         <SwiperSlide className={styles.image} key={image}><div className={styles.prev} onClick={prevHandler}></div><div className={styles.next} onClick={nextHandler}></div><img src={image} alt=''/></SwiperSlide>
@@ -37,19 +38,19 @@ const Card: React.FC<ICardProps> = ({ profile }) => {
                 })}
            </Swiper>
            <div className={styles.info}>
-               <h3>{profile.firstname} {profile.age}</h3>
+               <h3>{profile.firstname} <span>{profile.age} {setEndAge(profile.age)}</span></h3>
                <div className={styles.bio}>
                     <p>
                         {profile.bio.length > 50 ? `${profile.bio.slice(0, 50)}...` : profile.bio}
                     </p>
-                    {/* <div>
+               </div>
+               <div className={styles.hobbies}>
                         {profile.hobbies.map(hobby => {
                             return (
                                 <Hobby key={hobby} status='primary' hobby={hobby}/>
                             )
                         })}
-                    </div> */}
-               </div>
+                </div>
            </div>
         </section>
     )
