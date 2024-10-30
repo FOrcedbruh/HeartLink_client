@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-
 import { Routes, Route } from "react-router-dom";
 const Feed = lazy(() => import("./pages/Feed/Feed"))
 import Layout from "./components/Layout/Layout";
@@ -10,6 +9,7 @@ const CreateProfile = lazy(() => import("./pages/Create/CreateProfile"))
 const SupportPage = lazy(() => import("./pages/SupportPage/SupportPage"))
 const SettingsPage = lazy(() => import("./pages/SettingsPage/SettingsPage"))
 import { LoaderWindow } from "./components/Loader/Loader";
+const LikesPage = lazy(() => import("./pages/LikesPage/LikesPage"))
 
 
 const App: React.FC = () => {
@@ -26,6 +26,7 @@ const App: React.FC = () => {
                     <Route path="/me" element={<Suspense fallback={<LoaderWindow />}><Profile /></Suspense>}/>
                     <Route path="/support" element={<Suspense fallback={<LoaderWindow />}><SupportPage /></Suspense>}/>
                     <Route path="/settings" element={<Suspense fallback={<LoaderWindow />}><SettingsPage /></Suspense>}/>
+                    <Route path="likes" element={<Suspense><LikesPage /></Suspense>}/>
                 </Route>
                 <Route path="/me/create" element={<Suspense fallback={<LoaderWindow />}><CreateProfile step={0} status="create" /></Suspense>}/>
             </Routes>

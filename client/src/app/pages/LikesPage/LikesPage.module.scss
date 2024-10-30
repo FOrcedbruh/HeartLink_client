@@ -1,0 +1,30 @@
+.window {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+
+    h1 {
+        font-size: 24px;
+        padding: 0;
+        margin: 0;
+        align-self: flex-start;
+    }
+
+    ul.likes {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        width: 100%;
+        height: fit-content;
+        max-height: 70vh;
+        overflow: scroll;
+
+        h3.broken {
+            color: #979797;
+        }
+    }
+}
