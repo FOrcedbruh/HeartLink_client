@@ -29,3 +29,11 @@ export const checkProfileKeys = (profile: IProfile): boolean => {
     }
     return true
 }
+
+export const replaceAll = (str: string, toReplace: string, target: string) => {
+    return str.split(toReplace).join(target)
+}
+
+export const reverseStr = (target: string): string => {
+    return target.split("").reverse().join("")
+}
