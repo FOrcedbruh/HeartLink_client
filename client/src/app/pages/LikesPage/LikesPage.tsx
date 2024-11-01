@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 
 
 const TITLE: string = 'Мне поставили отметки "нравится"'
-const BROKENHEART: string = "Пока тут пусто (:"
+const BROKENHEART: string = "Пока тут пусто 💔"
 
 
 

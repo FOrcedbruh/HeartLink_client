@@ -11,6 +11,28 @@
     border-radius: 16px;
     background-color: #fff;
 
+    .like {
+        margin-right: 20px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        align-self: flex-end;
+        z-index: 11;
+        cursor: pointer;
+
+        img {
+            transition: filter .3s ease;
+            filter: grayscale(1);
+            &:hover {
+                filter: grayscale(0);
+            }
+        }
+    }
+
 
     .imagesSlider {
         width: 100%;
@@ -49,15 +71,24 @@
                 position: absolute;
                 overflow: hidden;
             }
-
-            img {
-                width: auto;
-                height: auto;
-                border: 12px;
-                max-height: 100%;
-                max-width: 100%;
-                border-radius: 10px;
+            .imgWrapper {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #fff;
+                img {
+                    width: auto;
+                    height: 100%;
+                    border: 12px;
+                    max-height: 100%;
+                    max-width: 100%;
+                    border-radius: 10px;
+                }
             }
+
+            
         }
     }
 

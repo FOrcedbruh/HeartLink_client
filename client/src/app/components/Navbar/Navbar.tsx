@@ -10,15 +10,6 @@ const Navbar: React.FC = () => {
 
     const [view, setView] = useState<boolean>(false)
 
-    const onViewHanlder = () => {
-        setView(true)
-        if (view === true) {
-            setTimeout(() => {
-                setView(false)
-            }, 3000);
-        }
-    }
-
     const variants = {
         initial: {
             opacity: 0,
@@ -34,8 +25,16 @@ const Navbar: React.FC = () => {
         }
     }
 
+    const hideNavbar = () => {
+        setView(false)
+    }
+
+    const showNavbar = () => {
+        setView(true)
+    }
+
     return (
-        <nav onClick={onViewHanlder} className={styles.navbar} style={{"width": view ? "400px" : "200px", "cursor": view ? "" : "pointer"}}>
+        <nav onMouseOver={showNavbar} onMouseLeave={hideNavbar} className={styles.navbar} style={{"width": view ? "400px" : "200px", "height": view ? "60px" : "30px",  "cursor": view ? "" : "pointer"}}>
             <AnimatePresence>
                 {view ? <ul>
                     <motion.li variants={variants} initial={"initial"} animate={"animate"} exit={"exit"} whileTap={{scale: 1.1}} whileHover={{scale: 1.4}}><Link to={"/"}><img src={homeIcon} width={30} height={30} alt="" /></Link></motion.li>

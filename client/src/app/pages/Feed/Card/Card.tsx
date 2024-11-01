@@ -6,16 +6,21 @@ import "swiper/scss/effect-fade"
 import "swiper/scss/scrollbar"
 import { IProfile } from '../../../../types/IProfile';
 import { Hobby } from '../../../components/Hobby/Hobby';
-import { useRef } from 'react';
+import { forwardRef, RefObject, useRef } from 'react';
 import { setEndAge } from '../../../../utils/utils';
-
-
+import likeIcon from "./../../../../icons/likeIcon.svg"
+import { motion, useTransform, useMotionValue } from 'framer-motion';
 
 interface ICardProps {
     profile: IProfile
 }
 
 const Card: React.FC<ICardProps> = ({ profile }) => {
+
+    // animate
+    const x = useMotionValue<number>(0)
+    const border = useTransform(x, [-100, 0, 100], ["2px solid chartreuse", "2px solid #fff", "2px solid #D91656"])
+
 
     const sliderRef = useRef<any | null>(null)
 
@@ -29,11 +34,19 @@ const Card: React.FC<ICardProps> = ({ profile }) => {
 
 
     return (
-        <section className={styles.card}>
+        <motion.section
+            className={styles.card}
+            style={{ border, x }}
+            drag={"x"}
+            dragConstraints={{left: 0, right: 0}}
+            >
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}  className={styles.like}>
+                <img src={likeIcon} alt="" width={30} height={30}/>
+            </motion.div>
            <Swiper allowTouchMove={false} ref={sliderRef} scrollbar={{}} effect='fade' modules={[EffectFade, Scrollbar]} className={styles.imagesSlider}>
                 {profile.profileImages.map(image => {
                     return (
-                        <SwiperSlide className={styles.image} key={image}><div className={styles.prev} onClick={prevHandler}></div><div className={styles.next} onClick={nextHandler}></div><img src={image} alt=''/></SwiperSlide>
+                        <SwiperSlide className={styles.image} key={image}><div className={styles.prev} onClick={prevHandler}></div><div className={styles.next} onClick={nextHandler}></div><div className={styles.imgWrapper}><img src={image} alt=''/></div></SwiperSlide>
                     )
                 })}
            </Swiper>
@@ -52,7 +65,7 @@ const Card: React.FC<ICardProps> = ({ profile }) => {
                         })}
                 </div>
            </div>
-        </section>
+        </motion.section>
     )
 }
 

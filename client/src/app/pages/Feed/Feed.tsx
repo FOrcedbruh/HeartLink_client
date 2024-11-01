@@ -7,16 +7,12 @@ import { IProfile } from '../../../types/IProfile';
 import { LoaderComponent } from '../../components/Loader/Loader';
 
 
-
-
 const Feed: React.FC = () => {
     
     document.title = "HeartLink | Главная"
 
     const { authUser } = useAuthContext()
     const [profiles, setProfiles] = useState<IProfile[]>([])
-
-
 
     const getFeed = async () => {
         if (authUser.profile.data.gender === "Мужчина") {
