@@ -6,20 +6,22 @@ import "swiper/scss/effect-fade"
 import "swiper/scss/scrollbar"
 import { IProfile } from '../../../../types/IProfile';
 import { Hobby } from '../../../components/Hobby/Hobby';
-import { forwardRef, RefObject, useRef } from 'react';
+import { Dispatch, forwardRef, RefObject, SetStateAction, useEffect, useRef } from 'react';
 import { setEndAge } from '../../../../utils/utils';
 import likeIcon from "./../../../../icons/likeIcon.svg"
-import { motion, useTransform, useMotionValue } from 'framer-motion';
+import { motion, useTransform, useMotionValue, useMotionValueEvent } from 'framer-motion';
 
 interface ICardProps {
     profile: IProfile
+    setCurrentUserIndex: Dispatch<SetStateAction<number>>
+    currentUserIndex: number
 }
 
-const Card: React.FC<ICardProps> = ({ profile }) => {
+const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserIndex }) => {
 
     // animate
     const x = useMotionValue<number>(0)
-    const border = useTransform(x, [-100, 0, 100], ["2px solid chartreuse", "2px solid #fff", "2px solid #D91656"])
+    const border = useTransform(x, [-100, 0, 100], ["2px solid #D91656", "2px solid #fff", "2px solid #00FF9C"])
 
 
     const sliderRef = useRef<any | null>(null)
@@ -31,6 +33,12 @@ const Card: React.FC<ICardProps> = ({ profile }) => {
     const prevHandler = () => {
         sliderRef.current.swiper.slidePrev()
     }
+
+    useMotionValueEvent(x, "change", () => {
+        if (x.get() === 100) {
+            console.log("hi")
+        }
+    })
 
 
     return (

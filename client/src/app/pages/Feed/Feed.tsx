@@ -14,6 +14,8 @@ const Feed: React.FC = () => {
     const { authUser } = useAuthContext()
     const [profiles, setProfiles] = useState<IProfile[]>([])
 
+    const [currentUserIndex, setCurrentUserIndex] = useState<number>(0)
+
     const getFeed = async () => {
         if (authUser.profile.data.gender === "Мужчина") {
             const res = await PHandlers.feed("MALE")
@@ -31,7 +33,7 @@ const Feed: React.FC = () => {
     return (
         <section className={styles.feed}>
             <div className={styles.container}>
-                {profiles.length && <Card profile={profiles[0]}/>}
+                {profiles.length && <Card setCurrentUserIndex={setCurrentUserIndex} currentUserIndex={currentUserIndex} profile={profiles[currentUserIndex]}/>}
             </div>
         </section>
     )

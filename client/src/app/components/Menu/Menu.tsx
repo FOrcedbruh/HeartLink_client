@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { IRoute, routes } from '../../../utils/routes/routes';
 import styles from './Menu.module.scss'
 import { motion } from 'framer-motion';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 
 
@@ -22,8 +22,26 @@ const Menu: React.FC<MenuPropsType> = ({ setOpenMenu }) => {
     const primaryOptions: IRoute[] = routes.filter(route => route.status === "primary")
     const secondaryOptions: IRoute[] = routes.filter(route => route.status === "secondary")
 
+
+    const menuRef = useRef<HTMLElement>(null)
+
+    const clickOutside = (e: any) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+            setOpenMenu(false)
+        }
+    }
+
+
+    useEffect(() => {
+        document.addEventListener("mousedown", clickOutside)
+
+        return () => {
+            document.removeEventListener("mousedown", clickOutside)
+        }
+    }, [])
+
     return (
-        <motion.aside initial={{opacity: 0, x: -300}} animate={{opacity: 1, x: 0, transition: { duration: 0.2 }}} exit={{x: -300, opacity: 0}} className={styles.menu}>
+        <motion.aside ref={menuRef} initial={{opacity: 0, x: -300}} animate={{opacity: 1, x: 0, transition: { duration: 0.2 }}} exit={{x: -300, opacity: 0}} className={styles.menu}>
             <div onClick={() => setOpenMenu(false)} className={styles.primaryOps}>
                 <p>Основные</p>
                 {primaryOptions.map(option => {
