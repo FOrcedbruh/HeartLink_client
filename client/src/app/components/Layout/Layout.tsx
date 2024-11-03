@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Menu from "../Menu/Menu";
 import { useViewNavbar } from "../../zustand/settings/useViewNavbar";
-
+import LikeIcon from './../../../icons/likeIcon.svg'
 
 
 const Layout: React.FC = () => {
@@ -28,7 +28,7 @@ const Layout: React.FC = () => {
                     <img src={menuIcon} alt="" width={30} height={30}/>
                 </motion.div>}
                 <div className={styles.logo}>
-                    <h2 className={styles.anim_typewriter}>❤️HeartLink</h2>
+                    <h2 className={styles.anim_typewriter}><img src={LikeIcon} width={30} height={30} alt="" />HeartLink</h2>
                 </div>
             </header>
             <article className={styles.container}>

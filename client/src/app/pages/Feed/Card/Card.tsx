@@ -6,25 +6,35 @@ import "swiper/scss/effect-fade"
 import "swiper/scss/scrollbar"
 import { IProfile } from '../../../../types/IProfile';
 import { Hobby } from '../../../components/Hobby/Hobby';
-import { Dispatch, forwardRef, RefObject, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import { setEndAge } from '../../../../utils/utils';
 import likeIcon from "./../../../../icons/likeIcon.svg"
 import { motion, useTransform, useMotionValue, useMotionValueEvent } from 'framer-motion';
 
+
+
+const EMPTY_PROFILES_TEXT: string = "Потенциальные партнеры закончились :("
+
+
+
 interface ICardProps {
     profile: IProfile
     setCurrentUserIndex: Dispatch<SetStateAction<number>>
-    currentUserIndex: number
+    currentUserIndex: number    
+    profilesCount: number
 }
 
-const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserIndex }) => {
+const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserIndex, profilesCount }) => {
 
     // animate
     const x = useMotionValue<number>(0)
     const border = useTransform(x, [-100, 0, 100], ["2px solid #D91656", "2px solid #fff", "2px solid #00FF9C"])
+    const rotate = useTransform(x, [-100, 0, 100], [-5, 0, 5])
 
 
     const sliderRef = useRef<any | null>(null)
+    const islikeSetted = useRef(false)
+    const isDislikeSetted  = useRef(false)
 
     const nextHandler = () => {
         sliderRef.current.swiper.slideNext()
@@ -34,21 +44,51 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
         sliderRef.current.swiper.slidePrev()
     }
 
+    const like = () => {
+        if (!islikeSetted.current) {
+            setCurrentUserIndex(currentUserIndex + 1)
+        }
+        return
+    }
+
+    const dislike = () => {
+        if (!isDislikeSetted.current) {
+            setCurrentUserIndex(currentUserIndex + 1)
+        }
+        return
+    }
+
     useMotionValueEvent(x, "change", () => {
-        if (x.get() === 100) {
-            console.log("hi")
+        if (x.get() > 140) {
+            like()
+            islikeSetted.current = true
+        } else if (x.get() < -140) {
+            dislike()
+            isDislikeSetted.current = true
+        } else if (x.get() < 30 && x.get() > -30) {
+            islikeSetted.current = false
+            isDislikeSetted.current = false
+        } else {
+            return
         }
     })
 
+    if (currentUserIndex >= profilesCount) {
+        return (
+            <motion.div className={styles.emptyProfiles} initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0, transition: { duration: 0.5 }}}>
+                <h2>{EMPTY_PROFILES_TEXT}</h2>
+            </motion.div>
+        )
+    }
 
     return (
         <motion.section
             className={styles.card}
-            style={{ border, x }}
+            style={{ border, x, rotate }}
             drag={"x"}
             dragConstraints={{left: 0, right: 0}}
             >
-            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}  className={styles.like}>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}onClick={like}  className={styles.like}>
                 <img src={likeIcon} alt="" width={30} height={30}/>
             </motion.div>
            <Swiper allowTouchMove={false} ref={sliderRef} scrollbar={{}} effect='fade' modules={[EffectFade, Scrollbar]} className={styles.imagesSlider}>

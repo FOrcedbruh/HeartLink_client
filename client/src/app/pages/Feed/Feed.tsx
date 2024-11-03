@@ -20,8 +20,10 @@ const Feed: React.FC = () => {
         if (authUser.profile.data.gender === "Мужчина") {
             const res = await PHandlers.feed("MALE")
             setProfiles(res.profiles)
+            console.log(res)
         } else {
             const res = await PHandlers.feed("FEMALE")
+            console.log(res)
             setProfiles(res.profiles)
         }
     }
@@ -33,7 +35,7 @@ const Feed: React.FC = () => {
     return (
         <section className={styles.feed}>
             <div className={styles.container}>
-                {profiles.length && <Card setCurrentUserIndex={setCurrentUserIndex} currentUserIndex={currentUserIndex} profile={profiles[currentUserIndex]}/>}
+                {profiles.length && <Card profilesCount={profiles.length} setCurrentUserIndex={setCurrentUserIndex} currentUserIndex={currentUserIndex} profile={profiles[currentUserIndex]}/>}
             </div>
         </section>
     )

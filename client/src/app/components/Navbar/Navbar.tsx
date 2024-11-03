@@ -4,7 +4,7 @@ import homeIcon from './../../../icons/homeIcon.svg'
 import profileIcon from './../../../icons/profileIcon.svg'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-
+import likeIcon from './../../../icons/likeIcon.svg'
 
 const Navbar: React.FC = () => {
 
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
             <AnimatePresence>
                 {view ? <ul>
                     <motion.li variants={variants} initial={"initial"} animate={"animate"} exit={"exit"} whileTap={{scale: 1.1}} whileHover={{scale: 1.4}}><Link to={"/"}><img src={homeIcon} width={30} height={30} alt="" /></Link></motion.li>
-                    <motion.li variants={variants} initial={"initial"} animate={"animate"} exit={"exit"} whileTap={{scale: 1.1}} whileHover={{scale: 1.4}}><Link to={"/likes"}>❤️</Link></motion.li>
+                    <motion.li variants={variants} initial={"initial"} animate={"animate"} exit={"exit"} whileTap={{scale: 1.1}} whileHover={{scale: 1.4}}><Link to={"/likes"}><img src={likeIcon} width={30} height={30}/></Link></motion.li>
                     <motion.li variants={variants} initial={"initial"} animate={"animate"} exit={"exit"} whileTap={{scale: 1.1}} whileHover={{scale: 1.4}}><Link to={"/me"}><img src={profileIcon} width={30} height={30} alt="" /></Link></motion.li>
                 </ul> : <div className={styles.hidden}></div>}
             </AnimatePresence>

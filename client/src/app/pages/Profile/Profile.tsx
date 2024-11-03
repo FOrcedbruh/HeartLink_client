@@ -1,6 +1,6 @@
 import styles from './Profile.module.scss'
 import { useAuthContext } from '../../../api/auth/authContext'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IProfile } from '../../../types/IProfile'
 import { IUser } from '../../../types/IUser'
 import { setEndAge } from '../../../utils/utils'
@@ -9,9 +9,10 @@ import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectFade, Pagination } from 'swiper/modules';
+import { EffectFade, Scrollbar } from 'swiper/modules';
 import 'swiper/scss';
 import 'swiper/scss/effect-fade';
+import 'swiper/scss/scrollbar'
 import 'swiper/scss/pagination';
 import plusIcon from './../../../icons/plusIcon.svg'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -100,11 +101,12 @@ const Profile: React.FC = () => {
             <AnimatePresence>
                 {modalOpen && <ModalFiles modalOpen={modalOpen} access_token={access_token} setModalOpen={setModalOpen}/>}
             </AnimatePresence>
+            {profile && <h1 className={styles.firstname}>{profile.firstname}</h1>}
             <div className={styles.userData}>
                 {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
                    {profile?.profileImages?.length > 0
                     ? 
-                    <Swiper pagination={true} className={styles.swiper} cubeEffect={{shadow: false}} effect={'fade'} grabCursor={true} modules={[EffectFade, Pagination]}>
+                    <Swiper className={styles.swiper} scrollbar={{}} cubeEffect={{shadow: false}} effect={'fade'} grabCursor={true} modules={[EffectFade, Scrollbar]}>
                             {profile.profileImages.map(image => {
                                return (
                                 <SwiperSlide 
@@ -118,8 +120,8 @@ const Profile: React.FC = () => {
                                                 style={{"backgroundColor": "#ff6363"}}
                                                 initial={{opacity: 0, scale: 0}}
                                                 animate={{opacity: 1, scale: 1}}
-                                                exit={{opacity: 0, scale: 0}} 
-                                                whileTap={{scale: 0.8}} 
+                                                exit={{opacity: 0, scale: 0}}
+                                                whileTap={{scale: 0.8}}
                                                 whileHover={{scale: 1.2}}
                                                 className={styles.toolBtn}onClick={() => deleteImagesHandler(image)}>
                                             <img  src={trashIcon} 
