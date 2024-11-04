@@ -164,13 +164,29 @@
         align-items: center;
         height: 70vh;
         width: 100%;
+        user-select: none;
 
         .slide {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: #fff;
             border-radius: 20px;
+
+            .next {
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                align-self: flex-end;
+            }
+
+            .prev {
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                align-self: flex-start;
+            }
 
             img {
                 width: 50%;
@@ -198,6 +214,7 @@
                     height: 30px;
                     border-radius: 50%;
                     z-index: 10;
+                    background-color: #000;
                     cursor: pointer;
                 }
             }

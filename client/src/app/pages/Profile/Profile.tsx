@@ -1,6 +1,6 @@
 import styles from './Profile.module.scss'
 import { useAuthContext } from '../../../api/auth/authContext'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IProfile } from '../../../types/IProfile'
 import { IUser } from '../../../types/IUser'
 import { setEndAge } from '../../../utils/utils'
@@ -8,7 +8,7 @@ import { Hobby } from '../../components/Hobby/Hobby'
 import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 import { EffectFade, Scrollbar } from 'swiper/modules';
 import 'swiper/scss';
 import 'swiper/scss/effect-fade';
@@ -23,6 +23,13 @@ import ConfirmModal from '../../components/ConfirmModal/ConfirmModal'
 import trashIcon from './../../../icons/trashIcon.svg'
 import { PHandlers } from '../../../api/profiles/handlers'
 import { useMessage } from '../../zustand/useMessage'
+
+
+
+
+
+
+
 
 const Profile: React.FC = () => {
 
@@ -42,6 +49,9 @@ const Profile: React.FC = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
     const [logoutConfirm, setLogoutConfirm] = useState<boolean>(false)
 
+
+    const swiperRef = useRef<any>(null)
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -57,18 +67,6 @@ const Profile: React.FC = () => {
         setAuthUser(null)
         await AHandlers.logout()
         navigate("/")
-    }
-
-    const variants = {
-        initial: {
-            opacity: 0,
-            y: 20
-        },
-        animate: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 1 }
-        }
     }
 
     const deleteImagesHandler = async (filename: string) => {
@@ -88,6 +86,16 @@ const Profile: React.FC = () => {
         }
     }
 
+    const nextslide = () => {
+        swiperRef.current.swiper.slideNext()
+    }
+
+    const prevSlide = () => {
+        swiperRef.current.swiper.slidePrev()
+    }
+
+
+
     if (!authUser) {
         return <LoaderWindow />
     }
@@ -103,33 +111,34 @@ const Profile: React.FC = () => {
             </AnimatePresence>
             {profile && <h1 className={styles.firstname}>{profile.firstname}</h1>}
             <div className={styles.userData}>
-                {profile && <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.swiper_wrapper}>
+                {profile && <motion.div initial={{opacity: 0, y: 30}} transition={{duration: 0.7}} whileInView={{opacity: 1, y: 0}} className={styles.swiper_wrapper}>
                    {profile?.profileImages?.length > 0
                     ? 
-                    <Swiper className={styles.swiper} scrollbar={{}} cubeEffect={{shadow: false}} effect={'fade'} grabCursor={true} modules={[EffectFade, Scrollbar]}>
+                    <Swiper ref={swiperRef} allowTouchMove={false} className={styles.swiper} scrollbar={{}} cubeEffect={{shadow: false}} effect={'fade'}  modules={[EffectFade, Scrollbar]}>
                             {profile.profileImages.map(image => {
                                return (
-                                <SwiperSlide 
+                                <SwiperSlide
                                     onMouseOver={() => setImageTools(true)}
                                     onMouseOut={() => setImageTools(false)}
                                     key={image}
-                                    className={styles.slide}><img src={image} alt="" />
+                                    className={styles.slide}>
+                                        <div onClick={nextslide} className={styles.next}></div>
+                                        <div onClick={prevSlide} className={styles.prev}></div>
+                                        <img src={image} alt="" />
                                     <AnimatePresence>{imageTools && <motion.div
                                         className={styles.tools}>
-                                            <motion.div 
-                                                style={{"backgroundColor": "#ff6363"}}
+                                            <motion.div
                                                 initial={{opacity: 0, scale: 0}}
                                                 animate={{opacity: 1, scale: 1}}
                                                 exit={{opacity: 0, scale: 0}}
                                                 whileTap={{scale: 0.8}}
                                                 whileHover={{scale: 1.2}}
                                                 className={styles.toolBtn}onClick={() => deleteImagesHandler(image)}>
-                                            <img  src={trashIcon} 
+                                            <img  src={trashIcon}
                                             width={10} height={10} alt="" />
                                                 </motion.div>
                                                 <motion.div
                                                     onClick={() => setModalOpen(true)}
-                                                    style={{"backgroundColor": "chartreuse"}}
                                                     className={styles.toolBtn}
                                                     initial={{opacity: 0, scale: 0}}
                                                     animate={{opacity: 1, scale: 1}}
@@ -151,9 +160,8 @@ const Profile: React.FC = () => {
                 </motion.div>}
                 
                 {profile?.firstname
-                // If not profile logics
                 ?
-                <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.profile}>
+                <motion.div initial={{opacity: 0, y: 30}} transition={{duration: 0.7}} whileInView={{opacity: 1, y: 0}} className={styles.profile}>
                     <h1>Ваш профиль</h1>
                     <p className={styles.tag}>@{user?.username}</p>
                     <ul>
@@ -187,7 +195,7 @@ const Profile: React.FC = () => {
                     </div>}
                 </motion.div>
                 :
-                <motion.div initial={"initial"} animate={"animate"} variants={variants} className={styles.createProfileBtn}>
+                <motion.div initial={{opacity: 0, y: 30}} transition={{duration: 0.7}} whileInView={{opacity: 1, y: 0}} className={styles.createProfileBtn}>
                     <h1>Создайте свой <span>профиль</span>, чтобы вас могли видеть другие люди</h1>
                     <Button type="button" onClick={() => navigate("/me/create")} width='60%'>
                         <p>Создать</p>

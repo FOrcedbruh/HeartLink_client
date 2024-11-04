@@ -4,7 +4,8 @@ import { useAuthContext } from '../../../api/auth/authContext';
 import { useEffect, useState } from 'react';
 import { Card } from './Card/Card';
 import { IProfile } from '../../../types/IProfile';
-import { LoaderComponent } from '../../components/Loader/Loader';
+
+
 
 
 const Feed: React.FC = () => {
@@ -31,6 +32,12 @@ const Feed: React.FC = () => {
     useEffect(() => {
         getFeed()
     }, [])
+
+
+    useEffect(() => {
+        
+    }, [])
+
 
     return (
         <section className={styles.feed}>
