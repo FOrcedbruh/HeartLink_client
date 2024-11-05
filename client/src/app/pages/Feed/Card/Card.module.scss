@@ -33,6 +33,28 @@
         }
     }
 
+    .dislike {
+        margin-left: 20px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        align-self: flex-start;
+        z-index: 11;
+        cursor: pointer;
+
+        img {
+            transition: filter .3s ease;
+            filter: grayscale(1);
+            &:hover {
+                filter: grayscale(0);
+            }
+        }
+    }
+
 
     .imagesSlider {
         width: 100%;

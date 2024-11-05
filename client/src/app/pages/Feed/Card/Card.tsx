@@ -9,7 +9,11 @@ import { Hobby } from '../../../components/Hobby/Hobby';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import { setEndAge } from '../../../../utils/utils';
 import likeIcon from "./../../../../icons/likeIcon.svg"
-import { motion, useTransform, useMotionValue, useMotionValueEvent } from 'framer-motion';
+import { motion, useTransform, useMotionValue, useMotionValueEvent, animate } from 'framer-motion';
+import { LoaderComponent } from '../../../components/Loader/Loader';
+import blackCrossIcon from './../../../../icons/blackCross.svg'
+
+
 
 
 
@@ -44,18 +48,36 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
         sliderRef.current.swiper.slidePrev()
     }
 
+    
+
+    
+
     const like = () => {
         if (!islikeSetted.current) {
             setCurrentUserIndex(currentUserIndex + 1)
+            sliderRef.current.swiper.slideTo(0)
         }
         return
+    }
+
+    const likeBtnHandler = () => {
+        animate(x, [200, 0], {
+           duration: 0.4
+        })
     }
 
     const dislike = () => {
         if (!isDislikeSetted.current) {
             setCurrentUserIndex(currentUserIndex + 1)
+            sliderRef.current.swiper.slideTo(0)
         }
         return
+    }
+
+    const dislikeBtnHandler = () => {
+        animate(x, [-200, 0], {
+            duration: 0.4
+         })
     }
 
     useMotionValueEvent(x, "change", () => {
@@ -73,6 +95,9 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
         }
     })
 
+    
+
+
     if (currentUserIndex >= profilesCount) {
         return (
             <motion.div className={styles.emptyProfiles} initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0, transition: { duration: 0.5 }}}>
@@ -88,13 +113,16 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
             drag={"x"}
             dragConstraints={{left: 0, right: 0}}
             >
-            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}onClick={like}  className={styles.like}>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}onClick={likeBtnHandler}  className={styles.like}>
                 <img src={likeIcon} alt="" width={30} height={30}/>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}onClick={dislikeBtnHandler}  className={styles.dislike}>
+                <img src={blackCrossIcon} alt="" width={30} height={30}/>
             </motion.div>
            <Swiper allowTouchMove={false} ref={sliderRef} scrollbar={{}} effect='fade' modules={[EffectFade, Scrollbar]} className={styles.imagesSlider}>
                 {profile.profileImages.map(image => {
                     return (
-                        <SwiperSlide className={styles.image} key={image}><div className={styles.prev} onClick={prevHandler}></div><div className={styles.next} onClick={nextHandler}></div><div className={styles.imgWrapper}><img src={image} alt=''/></div></SwiperSlide>
+                        <SwiperSlide className={styles.image} key={image}><div className={styles.prev} onClick={prevHandler}></div><div className={styles.next} onClick={nextHandler}></div><div className={styles.imgWrapper}>{profile.profileImages ? <img src={image} alt=''/>: <LoaderComponent/>}</div></SwiperSlide>
                     )
                 })}
            </Swiper>
