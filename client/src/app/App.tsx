@@ -10,7 +10,7 @@ const SupportPage = lazy(() => import("./pages/SupportPage/SupportPage"))
 const SettingsPage = lazy(() => import("./pages/SettingsPage/SettingsPage"))
 import { LoaderWindow } from "./components/Loader/Loader";
 const LikesPage = lazy(() => import("./pages/LikesPage/LikesPage"))
-
+const EditProfile = lazy(() => import("./pages/EditProfile/EditProfile"))
 
 const App: React.FC = () => {
 
@@ -28,6 +28,7 @@ const App: React.FC = () => {
                     <Route path="/settings" element={<Suspense fallback={<LoaderWindow />}><SettingsPage /></Suspense>}/>
                     <Route path="likes" element={<Suspense><LikesPage /></Suspense>}/>
                 </Route>
+                <Route path="/me/edit" element={<Suspense><EditProfile/></Suspense>}/>
                 <Route path="/me/create" element={<Suspense fallback={<LoaderWindow />}><CreateProfile step={0} status="create" /></Suspense>}/>
             </Routes>
         </main>
