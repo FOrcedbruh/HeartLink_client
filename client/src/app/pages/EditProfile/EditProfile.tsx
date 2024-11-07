@@ -3,10 +3,10 @@ import styles from './EditProfile.module.scss'
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../../api/auth/authContext";
 import { IProfile } from "../../../types/IProfile";
-import { motion, useMotionValue, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, useMotionValue, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { PasswordChangeModal } from "./PasswordChangeModal/PasswordChangeModal";
 
-
-interface IFormState {
+export interface IFormState {
     age: number
     password: string
     firstname?: string
@@ -21,6 +21,7 @@ const EditProfile: FC = () => {
 
     const { authUser } = useAuthContext()
     const [actionText, setActionText] = useState<string>("Потяните вправо, чтобы сохранить, влево, чтобы сбросить")
+    const [passwordModal, setPasswordModal] = useState<boolean>(false)
 
     const x = useMotionValue<number>(0)
     const h2Color = useTransform(x, [-140, 0, 140], ["#D91656", "#eee", "#00FF9C"])
@@ -52,13 +53,16 @@ const EditProfile: FC = () => {
 
     return (
         <section className={styles.window}>
+            <AnimatePresence>
+                {passwordModal && <PasswordChangeModal register={register} setModal={setPasswordModal}/>}
+            </AnimatePresence>
             <motion.h2 transition={{duration: 0.2}} style={{color: h2Color}} className={styles.actionText}>{actionText}</motion.h2>
             <motion.div drag={"x"} dragConstraints={{"left": 0, "right": 0}} style={{ x, border }} initial={{ y: 120, scale: 0.9, opacity: 0.4 }} animate={{ y: 0, scale: 1, opacity: 1 }} transition={{duration: 0.5}} className={styles.form}>
                 <h3>Редактировать профиль</h3>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input type="text" {...register("firstname")} placeholder={profile.firstname}/>
                     <input type="text" {...register("surname")} placeholder={profile.surname}/>
-                    <input type="number" {...register("age")} placeholder={profile.age.toString()}/>
+                    <input type="number" {...register("age")} defaultValue={profile.age.toString()}/>
                     <textarea {...register("bio", {
                         maxLength: {
                             value: 300,
@@ -66,7 +70,7 @@ const EditProfile: FC = () => {
                         }
                     })} placeholder={profile.bio}></textarea>
                     <div className={styles.btns}>
-                        <button className={styles.modalBtn}>Изменить пароль</button>
+                        <button className={styles.modalBtn} onClick={() => setPasswordModal(true)}>Изменить пароль</button>
                         <button className={styles.modalBtn}>Изменить увлечения</button>
                     </div>
                 </form>
