@@ -34,11 +34,6 @@ const Feed: React.FC = () => {
     }, [])
 
 
-    useEffect(() => {
-        
-    }, [])
-
-
     return (
         <section className={styles.feed}>
             <div className={styles.container}>

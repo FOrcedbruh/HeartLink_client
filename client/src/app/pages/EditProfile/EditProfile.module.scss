@@ -59,6 +59,13 @@
                 padding: 10px 20px;
             }
 
+            .hiddenBtn {
+                display: none;
+                width: 0;
+                height: 0;
+                overflow: none;
+            }
+
             .btns {
                 display: flex;
                 flex-direction: column;

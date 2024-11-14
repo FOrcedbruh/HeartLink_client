@@ -23,7 +23,7 @@ import ConfirmModal from '../../components/ConfirmModal/ConfirmModal'
 import trashIcon from './../../../icons/trashIcon.svg'
 import { PHandlers } from '../../../api/profiles/handlers'
 import { useMessage } from '../../zustand/useMessage'
-
+import editIcon from './../../../icons/editIcon.svg'
 
 
 
@@ -162,6 +162,9 @@ const Profile: React.FC = () => {
                 {profile?.firstname
                 ?
                 <motion.div initial={{opacity: 0, y: 30}} transition={{duration: 0.7}} whileInView={{opacity: 1, y: 0}} className={styles.profile}>
+                    <div className={styles.editBtn} onClick={() => navigate("/me/edit")}>
+                        <img src={editIcon} alt="" width={20} height={20} />
+                    </div>
                     <h1>Ваш профиль</h1>
                     <p className={styles.tag}>@{user?.username}</p>
                     <ul>

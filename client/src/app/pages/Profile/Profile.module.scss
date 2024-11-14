@@ -58,6 +58,12 @@
                 background-color: #eee;
             }
 
+            .editBtn {
+                position: absolute;
+                align-self: flex-end;
+                cursor: pointer;
+            }
+
             h1 {
                 font-size: 20px;
             }

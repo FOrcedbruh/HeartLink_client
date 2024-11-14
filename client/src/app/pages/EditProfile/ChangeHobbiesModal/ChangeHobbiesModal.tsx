@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import styles from './ChangeHobbiesModal.module.scss'
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { IHobby } from "../../../../types/IHobby";
 import { getHobbies } from "../../../../api/hobbies/handlers";
 import { Hobby } from "../../../components/Hobby/Hobby";
@@ -11,16 +11,16 @@ import { useAuthContext } from "../../../../api/auth/authContext";
 
 interface IChangeHobbiesModalProps {
     setHobbiesModal: Dispatch<SetStateAction<boolean>>,
-    setNewHobbies: Dispatch<SetStateAction<string[]>>
+    setNewHobbies: Dispatch<SetStateAction<string[]>>,
+    newHobbies: string[]
 }
 
 
 
-export const ChangeHobbiesModal: FC<IChangeHobbiesModalProps> = ({ setHobbiesModal, setNewHobbies }) => {
+export const ChangeHobbiesModal: FC<IChangeHobbiesModalProps> = ({ setHobbiesModal, setNewHobbies, newHobbies }) => {
 
-    const { authUser } = useAuthContext()
 
-    const [selectedHobbies, setSelectedHobbies] = useState<string[]>(authUser.profile.data.hobbies)
+    const [selectedHobbies, setSelectedHobbies] = useState<string[]>(newHobbies)
 
     const [hobbies, setHobbies] = useState<IHobby[]>([])
     const modalRef = useRef<HTMLDivElement>(null)
@@ -53,7 +53,6 @@ export const ChangeHobbiesModal: FC<IChangeHobbiesModalProps> = ({ setHobbiesMod
     useEffect(() => {
         getData()
     }, [])
-
 
 
     useEffect(() => {
@@ -91,9 +90,12 @@ export const ChangeHobbiesModal: FC<IChangeHobbiesModalProps> = ({ setHobbiesMod
                 <ul className={styles.selectedHobbies}>
                     {selectedHobbies.map((hobby, index) => {
                         return (
-                            <li onClick={() => eraseHobby(index)} key={index}>
-                                <Hobby status="secondary" hobby={`${hobby}`}/>
-                            </li>
+                            <AnimatePresence key={index}>
+                                 <motion.li exit={{opacity: 0}} initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.3}} onClick={() => eraseHobby(index)}>
+                                    <Hobby status="secondary" hobby={`${hobby}`}/>
+                                </motion.li>
+                            </AnimatePresence>
+                           
                         )
                     })}
                 </ul>
