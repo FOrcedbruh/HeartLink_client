@@ -28,7 +28,7 @@ const EditProfile: FC = () => {
     const [hobbiesModal, setHobbiesModal] = useState<boolean>(false)
 
     const [newPassword, setNewPassword] = useState<string>("")
-    const [newHobbies, setNewHobbies] = useState<string[]>(authUser.profile.data.hobbies)
+    const [newHobbies, setNewHobbies] = useState<string[]>([])
 
     const x = useMotionValue<number>(0)
     const h2Color = useTransform(x, [-140, 0, 140], ["#D91656", "#eee", "#00FF9C"])
@@ -74,7 +74,7 @@ const EditProfile: FC = () => {
                 {passwordModal && <PasswordChangeModal newPassword={newPassword} setNewPassword={setNewPassword} setModal={setPasswordModal}/>}
             </AnimatePresence>
             <AnimatePresence>
-                {hobbiesModal && <ChangeHobbiesModal setHobbiesModal={setHobbiesModal}/>}
+                {hobbiesModal && <ChangeHobbiesModal setNewHobbies={setNewHobbies} setHobbiesModal={setHobbiesModal}/>}
             </AnimatePresence>
             <motion.h2 transition={{duration: 0.2}} style={{color: h2Color}} className={styles.actionText}>{actionText}</motion.h2>
             <motion.div drag={"x"} dragConstraints={{"left": 0, "right": 0}} style={{ x, border }} initial={{ y: 120, scale: 0.9, opacity: 0.4 }} animate={{ y: 0, scale: 1, opacity: 1 }} transition={{duration: 0.5}} className={styles.form}>
@@ -91,7 +91,7 @@ const EditProfile: FC = () => {
                     })} placeholder={profile.bio}></textarea>
                     <div className={styles.btns}>
                         <button className={styles.modalBtn} onClick={() => setPasswordModal(true)}>{newPassword ? "* * * * * *" : "Изменить пароль"}</button>
-                        <button className={styles.modalBtn} onClick={() => setHobbiesModal(true)}>Изменить увлечения</button>
+                        <button className={styles.modalBtn} onClick={() => setHobbiesModal(true)}>{newHobbies.length ? "Вы выбрали увлечения" : "Изменить увлечения"}</button>
                     </div>
                 </form>
             </motion.div>
