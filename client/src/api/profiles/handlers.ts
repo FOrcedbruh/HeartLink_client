@@ -1,5 +1,6 @@
 import { instance } from "../instance";
-
+import { IUpdateProfile } from "../../types/IUpdateProfile";
+import deleteEmptyProps from "../../utils/helpers/removeEmptyFields";
 
 class ProfileHandlers {
     async create_profile(firstname: string, surname: string, access_token: string): Promise<any> {
@@ -54,6 +55,17 @@ class ProfileHandlers {
         const res = await instance.post("profile/get_profile_stage", {}, {headers: {"Authorization": `Bearer ${access_token}`}})
 
         return res.data
+    }
+    async update_profile(access_token: string, data: IUpdateProfile): Promise<any> {
+        try {
+            const clearData: IUpdateProfile = deleteEmptyProps(data)
+            const res = await instance.patch("/profile/update", clearData, {headers : {"Authorization": `Bearer ${access_token}`}})
+            
+            return res.data
+        } catch (e: any) {
+            return e.response.data.detail
+        }
+        
     }
 }
 

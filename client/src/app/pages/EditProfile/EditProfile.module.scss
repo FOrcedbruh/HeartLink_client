@@ -9,6 +9,21 @@
     align-items: center;
     background-color: $secondary_color;
 
+    .backLnk {
+        position: absolute;
+        align-self: flex-start;
+        left: 2%;
+        top: 4%;
+        text-decoration: none;
+        color: #fff;
+        transition: scale .3s ease;
+        cursor: pointer;
+
+        &:hover {
+            scale: 1.1;
+        }
+    }
+
     h2.actionText {
         position: absolute;
         top: 5%;

@@ -6,6 +6,10 @@ import { IProfile } from "../../../types/IProfile";
 import { motion, useMotionValue, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { PasswordChangeModal } from "./PasswordChangeModal/PasswordChangeModal";
 import { ChangeHobbiesModal } from "./ChangeHobbiesModal/ChangeHobbiesModal";
+import { PHandlers } from "../../../api/profiles/handlers";
+import { AHandlers } from "../../../api/auth/handlers";
+import { useNavigate } from "react-router-dom";
+
 
 
 export interface IFormState {
@@ -13,15 +17,19 @@ export interface IFormState {
     firstname?: string
     surname?: string
     bio?: string
-    hobbies: string[]
+    hobbies?: string[]
 }
 
 
 
 const EditProfile: FC = () => {
 
+    const access_token: string | null = localStorage.getItem("access_token")
 
-    const { authUser } = useAuthContext()
+    const navigate = useNavigate()
+
+
+    const { authUser, setAuthUser } = useAuthContext()
     const [actionText, setActionText] = useState<string>("Потяните вправо, чтобы сохранить, влево, чтобы сбросить")
 
     const [passwordModal, setPasswordModal] = useState<boolean>(false)
@@ -49,8 +57,11 @@ const EditProfile: FC = () => {
         } else if (x.get() > 0) {
             setActionText("Сохранить")
             if (x.get() > 140) {
-                submitRef.current?.click();
-                isSubmitClicked.current = true
+                if (isSubmitClicked.current === false) {
+                    submitRef.current?.click();
+                    isSubmitClicked.current = true;
+                }
+                
             }
         } else {
             setActionText("Потяните вправо, чтобы сохранить, влево, чтобы сбросить")
@@ -70,12 +81,11 @@ const EditProfile: FC = () => {
     const profile: IProfile = authUser.profile.data
 
 
-    const onSubmit = (data: IFormState) => {
-        if (!isSubmitClicked.current) {
-            data.hobbies = newHobbies
-            console.log(data)
-            reset()
-        }
+    const onSubmit = async (data: IFormState) => {
+        data["hobbies"] = newHobbies
+        const res = await PHandlers.update_profile(access_token!, data)
+        console.log(res)
+        reset()
     }
 
 
@@ -87,8 +97,20 @@ const EditProfile: FC = () => {
         }
     }
 
+    const SaveAndBackHandler = async () => {
+        localStorage.removeItem("auser")
+        const data = await AHandlers.me(access_token!)
+        //@ts-ignore
+        setAuthUser(data)
+        localStorage.setItem("auser", JSON.stringify(data))
+
+        navigate("/me")
+    }
+
+
     return (
         <section className={styles.window}>
+            <p onClick={SaveAndBackHandler} className={styles.backLnk}>Обратно в профиль</p>
             <AnimatePresence>
                 {passwordModal && <PasswordChangeModal newPassword={newPassword} setNewPassword={setNewPassword} setModal={setPasswordModal}/>}
             </AnimatePresence>
@@ -105,12 +127,12 @@ const EditProfile: FC = () => {
                     <textarea {...register("bio", {
                         maxLength: {
                             value: 300,
-                            message: "Символов должно быть меньше 300"
+                            message: "Символов должно быть не более 300"
                         }
                     })} placeholder={profile.bio}></textarea>
                     <div className={styles.btns}>
                         <button className={styles.modalBtn} onClick={() => setPasswordModal(true)}>{newPassword ? "* * * * * *" : "Изменить пароль"}</button>
-                        <button className={styles.modalBtn} onClick={() => setHobbiesModal(true)}>{newHobbies.length ? "Вы выбрали увлечения" : "Изменить увлечения"}</button>
+                        <button className={styles.modalBtn} onClick={() => setHobbiesModal(true)}>Изменить увлечения</button>
                     </div>
                     <button ref={submitRef} type="submit" className={styles.hiddenBtn}></button>
                 </form>
