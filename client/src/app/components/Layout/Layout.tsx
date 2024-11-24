@@ -4,17 +4,32 @@ import Navbar from "../Navbar/Navbar";
 import { useAuthContext } from "../../../api/auth/authContext";
 import menuIcon from './../../../icons/MenuIcon.svg'
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import { useViewNavbar } from "../../zustand/settings/useViewNavbar";
 import LikeIcon from './../../../icons/likeIcon.svg'
-
+import { LHandlers } from "../../../api/likes/handlers";
 
 const Layout: React.FC = () => {
 
     const { authUser } = useAuthContext()
+    const access_token: string | null = localStorage.getItem("access_token")
     const [openMenu, setOpenMenu] = useState<boolean>(false)
     const { viewNavbar } = useViewNavbar()
+    const [likes, setLikes] = useState<number>(0)
+
+    const profile_id: number = authUser.profile?.data.id
+    console.log(profile_id)
+
+    const getLikes = async () => {
+        const res = await LHandlers.get_likes_count(profile_id,  access_token!)
+
+        console.log(res.count)
+    }
+
+    useEffect(() => {
+        getLikes()
+    }, [])
 
 
 
@@ -28,7 +43,7 @@ const Layout: React.FC = () => {
                     <img src={menuIcon} alt="" width={30} height={30}/>
                 </motion.div>}
                 <div className={styles.logo}>
-                    <h2 className={styles.anim_typewriter}><img src={LikeIcon} width={30} height={30} alt="" />HeartLink</h2>
+                    <h2 className={styles.anim_typewriter}><img src={LikeIcon} width={30} height={30} alt="" /><motion.sub initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 10}} transition={{delay: 2.2}} className={styles.likesCount}>3</motion.sub>HeartLink</h2>
                 </div>
             </header>
             <article className={styles.container}>

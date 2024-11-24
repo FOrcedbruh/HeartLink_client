@@ -12,7 +12,7 @@ import likeIcon from "./../../../../icons/likeIcon.svg"
 import { motion, useTransform, useMotionValue, useMotionValueEvent, animate } from 'framer-motion';
 import { LoaderComponent } from '../../../components/Loader/Loader';
 import blackCrossIcon from './../../../../icons/blackCross.svg'
-
+import { LHandlers } from '../../../../api/likes/handlers';
 
 
 
@@ -26,9 +26,11 @@ interface ICardProps {
     setCurrentUserIndex: Dispatch<SetStateAction<number>>
     currentUserIndex: number    
     profilesCount: number
+    auth_profile_id: number
+    access_token: string
 }
 
-const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserIndex, profilesCount }) => {
+const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserIndex, profilesCount , auth_profile_id, access_token}) => {
 
     // animate
     const x = useMotionValue<number>(0)
@@ -52,8 +54,9 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
 
     
 
-    const like = () => {
+    const like = async () => {
         if (!islikeSetted.current) {
+            await LHandlers.like(auth_profile_id, profile.id, access_token)
             setCurrentUserIndex(currentUserIndex + 1)
             sliderRef.current.swiper.slideTo(0)
         }

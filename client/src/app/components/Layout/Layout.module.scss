@@ -51,17 +51,21 @@
           overflow: hidden;
           transform: translateY(-50%);    
         }
+        sub.likesCount {
+          font-size: 12px;
+          color: #8576FF;
+        }
     }
 }
 
 
 .anim_typewriter{
-  animation: typewriter 1s steps(10) 1s 1 normal both,
-             blinkTextCursor 700ms steps(10) infinite normal;
+  animation: typewriter 1s steps(11) 1s 1 normal both,
+            blinkTextCursor 700ms steps(11) infinite normal;
 }
 @keyframes typewriter{
   from {width: 0;}
-  to {width: 6em;}
+  to {width: 6.15em;}
 }
 @keyframes blinkTextCursor{
   from {border-right-color: #8576FF;}

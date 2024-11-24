@@ -7,4 +7,5 @@ export interface IProfile {
     profileImages: string[]
     hobbies: string[]
     bio: string
+    id: number
 }

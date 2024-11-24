@@ -14,6 +14,7 @@ const Feed: React.FC = () => {
 
     const { authUser } = useAuthContext()
     const [profiles, setProfiles] = useState<IProfile[]>([])
+    const access_token: string | null = localStorage.getItem("access_token")
 
     const [currentUserIndex, setCurrentUserIndex] = useState<number>(0)
 
@@ -21,10 +22,8 @@ const Feed: React.FC = () => {
         if (authUser.profile.data.gender === "Мужчина") {
             const res = await PHandlers.feed("MALE")
             setProfiles(res.profiles)
-            console.log(res)
         } else {
             const res = await PHandlers.feed("FEMALE")
-            console.log(res)
             setProfiles(res.profiles)
         }
     }
@@ -37,7 +36,7 @@ const Feed: React.FC = () => {
     return (
         <section className={styles.feed}>
             <div className={styles.container}>
-                {profiles.length && <Card profilesCount={profiles.length} setCurrentUserIndex={setCurrentUserIndex} currentUserIndex={currentUserIndex} profile={profiles[currentUserIndex]}/>}
+                {profiles.length && <Card access_token={access_token!} auth_profile_id={authUser.profile.data.id} profilesCount={profiles.length} setCurrentUserIndex={setCurrentUserIndex} currentUserIndex={currentUserIndex} profile={profiles[currentUserIndex]}/>}
             </div>
         </section>
     )

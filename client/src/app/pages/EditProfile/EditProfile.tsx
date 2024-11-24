@@ -9,6 +9,7 @@ import { ChangeHobbiesModal } from "./ChangeHobbiesModal/ChangeHobbiesModal";
 import { PHandlers } from "../../../api/profiles/handlers";
 import { AHandlers } from "../../../api/auth/handlers";
 import { useNavigate } from "react-router-dom";
+import { useMessage } from "../../zustand/useMessage";
 
 
 
@@ -27,6 +28,8 @@ const EditProfile: FC = () => {
     const access_token: string | null = localStorage.getItem("access_token")
 
     const navigate = useNavigate()
+
+    const { setMessage } = useMessage()
 
 
     const { authUser, setAuthUser } = useAuthContext()
@@ -84,7 +87,11 @@ const EditProfile: FC = () => {
     const onSubmit = async (data: IFormState) => {
         data["hobbies"] = newHobbies
         const res = await PHandlers.update_profile(access_token!, data)
-        console.log(res)
+        if (res.status === 200) {
+            setMessage("Профиль успешно обновлен")
+        } else {
+            setMessage("Ошибка обновления профиля")
+        }
         reset()
     }
 

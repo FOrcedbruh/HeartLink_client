@@ -3,9 +3,10 @@ import { instance } from "../instance";
 
 
 class LikesHandlers {
-    async like(profile_id: number, access_token: string): Promise<any> {
+    async like(profile_id: number, liked_profile_id: number, access_token: string): Promise<any> {
         const res = await instance.post("likes/like", {
-            profile_id
+            profile_id,
+            liked_profile_id
         }, {
             headers: {"Authorization": `Bearer ${access_token}`}
         })
@@ -21,6 +22,15 @@ class LikesHandlers {
         const res = await instance.post(`check_like_profile/${profile_id}`)
 
         res.data
+    }
+    async get_likes_count(liked_profile: number, access_token: string): Promise<any> {
+        const res = await instance.post('/likes/get_likes_count',
+            liked_profile,
+        {
+            headers: {"Authorization": `Bearer ${access_token}`}
+        })
+
+        return res.data
     }
 }
 
