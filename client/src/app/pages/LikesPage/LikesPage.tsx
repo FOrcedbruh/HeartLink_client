@@ -5,6 +5,7 @@ import { useAuthContext } from '../../../api/auth/authContext'
 import { ILike } from '../../../types/ILike'
 import { replaceAll } from '../../../utils/utils'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 
 const TITLE: string = 'Мне поставили отметки "нравится"'
@@ -20,13 +21,12 @@ const LikesPage: FC = () => {
 
     const [likes, setLikes] = useState<ILike[]>([])
 
+    const navigate =  useNavigate()
+
     const profile_id: number = authUser.profile.data.id
 
     const getLikes = async () => {
         const res = await LHandlers.likes(profile_id)
-
-
-        console.log(res)
         setLikes(res)
     }
 
@@ -61,14 +61,15 @@ const LikesPage: FC = () => {
                                 animate={"animate"}
                                 initial={"hidden"}
                                 custom={index+1}
-                               whileHover={{
-                                backgroundColor: "#8576FF",
-                               }}
-                               whileTap={{
-                                scale: 0.9
-                               }}
+                                whileHover={{
+                                    backgroundColor: "#8576FF",
+                                }}
+                                whileTap={{
+                                    scale: 0.9
+                                }}
                                 key={index} 
                                 className={styles.listItem}
+                                onClick={() => navigate(`/check_profile/${like.profile_id}`)}
                             ><h2>❤️</h2><p>Вы понравились одному человеку</p><span>{date} в {time}</span></motion.li>
                         )
                     })

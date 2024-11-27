@@ -18,13 +18,13 @@ class LikesHandlers {
 
         return res.data
     }
-    async get_profile_by_like(profile_id: number): Promise<any> {
-        const res = await instance.post(`check_like_profile/${profile_id}`)
+    async get_profile_by_like(profile_id: string): Promise<any> {
+        const res = await instance.post(`likes/check_like_profile/${profile_id}`)
 
-        res.data
+        return res.data
     }
     async get_likes_count(liked_profile: number, access_token: string): Promise<any> {
-        const res = await instance.post('/likes/get_likes_count',
+        const res = await instance.post('likes/get_likes_count',
             liked_profile,
         {
             headers: {"Authorization": `Bearer ${access_token}`}

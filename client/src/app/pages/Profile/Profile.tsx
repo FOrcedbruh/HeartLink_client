@@ -8,7 +8,7 @@ import { Hobby } from '../../components/Hobby/Hobby'
 import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectFade, Scrollbar } from 'swiper/modules';
 import 'swiper/scss';
 import 'swiper/scss/effect-fade';
