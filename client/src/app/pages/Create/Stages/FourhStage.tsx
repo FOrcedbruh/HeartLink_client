@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { PHandlers } from "../../../../api/profiles/handlers"
 import { getHobbies } from "../../../../api/hobbies/handlers"
 import { IHobby } from "../../../../types/IHobby"
-import { Hobby } from "../../../components/Hobby/Hobby"
+import { Hobby, HobbyStatus } from "../../../components/Hobby/Hobby"
 
 
 interface FourthStagePropsType {
@@ -72,14 +72,14 @@ const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage, access_t
                 <motion.article initial={{ opacity: 0, y: 30}} animate={{opacity: 1, y: 0, transition: { duration: 1 }}}>
                     {hobbies.map(hobby => {
                         return (
-                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => selectHobby(hobby.title)} custom={hobby.id} initial={"initial"} animate={"animate"} variants={variants} key={hobby.id}><Hobby status="primary" hobby={hobby.title}/></motion.div>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => selectHobby(hobby.title)} custom={hobby.id} initial={"initial"} animate={"animate"} variants={variants} key={hobby.id}><Hobby status={HobbyStatus.primary} hobby={hobby.title}/></motion.div>
                         )
                     })}
                 </motion.article>
                 <div className={styles.selectedHobbies}>
                     {selectedHobbies.map((hobby, index) => {
                         return (
-                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => eraseHobby(index)} initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6 } }} key={index}><Hobby  hobby={`${hobby}❤️`} status="secondary"/></motion.div>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={() => eraseHobby(index)} initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.6 } }} key={index}><Hobby  hobby={`${hobby}❤️`} status={HobbyStatus.secondary}/></motion.div>
                         )
                     })}
                 </div>

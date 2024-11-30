@@ -13,7 +13,7 @@ import { motion, useTransform, useMotionValue, useMotionValueEvent, animate } fr
 import { LoaderComponent } from '../../../components/Loader/Loader';
 import blackCrossIcon from './../../../../icons/blackCross.svg'
 import { LHandlers } from '../../../../api/likes/handlers';
-
+import { HobbyStatus } from '../../../components/Hobby/Hobby';
 
 
 
@@ -139,7 +139,7 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
                <div className={styles.hobbies}>
                         {profile.hobbies.map(hobby => {
                             return (
-                                <Hobby key={hobby} status='primary' hobby={hobby}/>
+                                <Hobby key={hobby} status={HobbyStatus.primary} hobby={hobby}/>
                             )
                         })}
                 </div>

@@ -6,11 +6,11 @@ import { IProfile } from "../../../types/IProfile";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Scrollbar } from "swiper/modules";
 import { setEndAge } from "../../../utils/utils";
-import { Hobby } from "../../components/Hobby/Hobby";
+import { Hobby, HobbyStatus } from "../../components/Hobby/Hobby";
 import "swiper/scss";
 import 'swiper/scss/effect-fade';
 import 'swiper/scss/scrollbar';
-
+import { motion } from "framer-motion";
 
 
 const LikedProfilePage: FC = () => {
@@ -39,6 +39,7 @@ const LikedProfilePage: FC = () => {
     }
 
 
+
     return (
         <section className={styles.window}>
             <article>
@@ -54,12 +55,12 @@ const LikedProfilePage: FC = () => {
                             )
                         })}
                     </Swiper>
-                    <div className={styles.age}>
+                    <motion.div initial={{opacity: 0, x: -30}} animate={{opacity: 1, x: 0}} transition={{duration: 0.5}} className={styles.age}>
                         <p>{profile?.age} {setEndAge(Number(profile?.age))}</p>
-                    </div>
-                    <div className={styles.firstname}>
+                    </motion.div>
+                    <motion.div initial={{opacity: 0, x: 30}} animate={{opacity: 1, x: 0}} transition={{duration: 0.5}} className={styles.firstname}>
                         <p>{profile?.firstname}</p>
-                    </div>
+                    </motion.div>
                 </div>
                 <div className={styles.rightSide}>
                    <div className={styles.bio}>
@@ -68,13 +69,13 @@ const LikedProfilePage: FC = () => {
                    <div className={styles.hobbies}>
                         {profile?.hobbies.map(hobby => {
                             return (
-                                <Hobby key={hobby} hobby={hobby} status="primary"/>
+                                <Hobby key={hobby} hobby={hobby} status={HobbyStatus.primary}/>
                             )
                         })}
                    </div>
-                   <div className={styles.btns}>
-                        <button className={`${styles.btn} ${styles.dislike}`}>Не нравится</button>
-                        <button className={`${styles.btn} ${styles.like}`}>Нравится</button>
+                    <div className={styles.btns}>
+                        <motion.button whileTap={{ borderRadius:0 }} whileHover={{ scale: 1.05 }} className={`${styles.btn} ${styles.dislike}`}>Не нравится</motion.button>
+                        <motion.button whileTap={{ borderRadius: 0 }} whileHover={{ scale: 1.05 }} className={`${styles.btn} ${styles.like}`}>Нравится</motion.button>
                     </div>
                 </div>
             </article>

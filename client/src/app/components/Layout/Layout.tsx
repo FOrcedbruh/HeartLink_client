@@ -43,7 +43,11 @@ const Layout: React.FC = () => {
                     <img src={menuIcon} alt="" width={30} height={30}/>
                 </motion.div>}
                 <div className={styles.logo}>
-                    <h2 className={styles.anim_typewriter}><img src={LikeIcon} width={30} height={30} alt="" /><motion.sub initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 10}} transition={{delay: 2.2}} className={styles.likesCount}>{likes && likes}</motion.sub>HeartLink</h2>
+                    <h2 className={styles.anim_typewriter}>
+                        <img src={LikeIcon} width={30} height={30} alt="" />
+                        <motion.sub initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 10}} transition={{delay: 2.2}} className={styles.likesCount}>{likes !== 0 && likes}</motion.sub>
+                        HeartLink
+                    </h2>
                 </div>
             </header>
             <article className={styles.container}>

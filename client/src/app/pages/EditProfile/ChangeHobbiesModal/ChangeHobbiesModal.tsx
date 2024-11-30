@@ -3,9 +3,8 @@ import styles from './ChangeHobbiesModal.module.scss'
 import { motion, AnimatePresence } from "framer-motion";
 import { IHobby } from "../../../../types/IHobby";
 import { getHobbies } from "../../../../api/hobbies/handlers";
-import { Hobby } from "../../../components/Hobby/Hobby";
+import { Hobby, HobbyStatus } from "../../../components/Hobby/Hobby";
 import { LoaderComponent } from "../../../components/Loader/Loader";
-import { useAuthContext } from "../../../../api/auth/authContext";
 
 
 
@@ -81,7 +80,7 @@ export const ChangeHobbiesModal: FC<IChangeHobbiesModalProps> = ({ setHobbiesMod
                     {hobbies ? hobbies.map(hobby => {
                         return (
                             <motion.li onClick={() => selectHobby(hobby.title)} key={hobby.id} custom={hobby.id} variants={variants} initial={"initial"} animate={"animate"}>
-                                <Hobby status="primary" hobby={hobby.title} />
+                                <Hobby status={HobbyStatus.primary} hobby={hobby.title} />
                             </motion.li>
                         )
                     }) : <LoaderComponent />}
@@ -92,7 +91,7 @@ export const ChangeHobbiesModal: FC<IChangeHobbiesModalProps> = ({ setHobbiesMod
                         return (
                             <AnimatePresence key={index}>
                                  <motion.li exit={{opacity: 0}} initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.3}} onClick={() => eraseHobby(index)}>
-                                    <Hobby status="secondary" hobby={`${hobby}`}/>
+                                    <Hobby status={HobbyStatus.secondary} hobby={`${hobby}`}/>
                                 </motion.li>
                             </AnimatePresence>
                            
