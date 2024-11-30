@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { IProfile } from '../../../types/IProfile'
 import { IUser } from '../../../types/IUser'
 import { setEndAge } from '../../../utils/utils'
-import { Hobby } from '../../components/Hobby/Hobby'
+import { Hobby, HobbyStatus } from '../../components/Hobby/Hobby'
 import { Button } from '../../components/Button/Button'
 import { AHandlers } from '../../../api/auth/handlers'
 import { useNavigate } from 'react-router-dom'
@@ -20,6 +20,7 @@ import { LoaderWindow } from '../../components/Loader/Loader'
 import logoutIcon from './../../../icons/logout.svg'
 import { ModalFiles } from './ModalFiles/ModalFiles'
 import ConfirmModal from '../../components/ConfirmModal/ConfirmModal'
+import { ConfirmVariantEnum } from '../../components/ConfirmModal/ConfirmModal'
 import trashIcon from './../../../icons/trashIcon.svg'
 import { PHandlers } from '../../../api/profiles/handlers'
 import { useMessage } from '../../zustand/useMessage'
@@ -104,7 +105,7 @@ const Profile: React.FC = () => {
     return (
         <section className={styles.window}>
             <AnimatePresence>
-                {logoutConfirm && <ConfirmModal confirmBtnText='Выйти' variant="primary" text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
+                {logoutConfirm && <ConfirmModal confirmBtnText='Выйти' variant={ConfirmVariantEnum.primary} text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
             </AnimatePresence>
             <AnimatePresence>
                 {modalOpen && <ModalFiles modalOpen={modalOpen} access_token={access_token} setModalOpen={setModalOpen}/>}
@@ -183,7 +184,7 @@ const Profile: React.FC = () => {
                         <div className={styles.hobbies}>
                             {profile?.hobbies.map(hobby => {
                                 return (
-                                    <Hobby status='primary' key={hobby} hobby={hobby}/>
+                                    <Hobby status={HobbyStatus.primary} key={hobby} hobby={hobby}/>
                                 )
                             })}
                         </div>

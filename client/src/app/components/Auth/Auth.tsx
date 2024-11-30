@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './Auth.module.scss'
 import Login from './Login';
 import Reg from './Reg';
+import { motion } from 'framer-motion';
 
 const Auth: React.FC = () => {
 
@@ -15,9 +16,9 @@ const Auth: React.FC = () => {
                 <Login /> :
                 <Reg />
             }
-            <div className={styles.onToggle} onClick={() => setToggle(!toggle)}>
+            <motion.div whileHover={{ scaleX: 1.05 }} whileTap={{ scaleX: 1.1 }} className={styles.onToggle} onClick={() => setToggle(!toggle)}>
                 <h2>{toggle ? "Создать аккаунт" : "Войти"}</h2>
-            </div>
+            </motion.div>
         </section>
     )
 }

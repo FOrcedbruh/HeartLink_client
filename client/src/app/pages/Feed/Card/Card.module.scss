@@ -11,6 +11,13 @@
     border-radius: 16px;
     background-color: #fff;
 
+    @media screen and (max-width: 900px) {
+        width: 80%;
+    }
+    @media screen and (max-width: 900px) {
+        width: 98%;
+    }
+
     .like {
         margin-right: 20px;
         margin-top: 20px;
@@ -107,6 +114,13 @@
                     max-height: 100%;
                     max-width: 100%;
                     border-radius: 10px;
+
+                    @media only screen and (max-width: 900px) {
+                        height: 80%;
+                    }
+                    @media only screen and (max-width: 500px) {
+                        height: 50%;
+                    }
                 }
             }
 
