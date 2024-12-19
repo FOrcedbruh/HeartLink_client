@@ -20,8 +20,6 @@ const App: React.FC = () => {
 
     const { authUser } = useAuthContext()
 
-
-
     return (
         <main className="main">
             <Routes>
