@@ -65,15 +65,19 @@ const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token, moda
         <motion.div exit={{opacity: 0}} className={styles.blur}>
                 <motion.section initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} exit={{opacity: 0, y: 20}} className={styles.window}>
                     <motion.div onClick={() => setModalOpen(false)} whileHover={{scale: 1.2}} whileTap={{scale: 0.8}} className={styles.closeBtn}><img src={closeIcon} alt="" width={24} height={24}/></motion.div>
-                        <h2>{images ? "Выбранные изоражения" : "Выберите изображения"}</h2>
+                        <h2>{images.length? `Выбранные изоражения (${images.length})` : "Выберите изображения"}</h2>
                         <div className={styles.images}>
                             <input multiple type="file" accept='image/jpg, image/jpeg, image/png, image/heic, image/webp' onChange={e => changeHandler(e)} className={styles.hidden} ref={filesRef}/>
                             {images.length < 1 && <Button type='button' width='200px' onClick={selectImages}>Выбрать <img src={imageIcon} alt="" width={22} height={22}/></Button>}
-                            {images && images.map(image => {
-                                return (
-                                    <p key={image.name}>{image.name}</p>
-                                )
-                            })}
+                            <ul className={styles.selectedImages}>
+                                {images && images.map(image => {
+                                    return (
+                                        <li key={image.name}>
+                                            <p>{image.name}</p>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
                         </div>
                         {images.length > 0 && <Button width='200px' height='40px' onClick={update_images} type='button'>{isLoading ? <LoaderComponent /> : "Подтвердить"}</Button>}
                 </motion.section>
