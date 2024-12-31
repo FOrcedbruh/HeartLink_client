@@ -30,11 +30,6 @@ class AuthHandlers {
             return error.response.data.detail
         }
     }
-    async logout(): Promise<any> {
-        const res: AxiosResponse = await instance.post("auth/logout")
-
-        return res.data
-    }
 
     async me(access_token: string): Promise<any> {
         try {
@@ -42,7 +37,7 @@ class AuthHandlers {
                 instance.get("auth/users/me", {
                 headers: {"Authorization": `Bearer ${access_token}`}
             }),
-            instance.get("profile/", {
+                instance.get("profile/", {
                 headers: {"Authorization": `Bearer ${access_token}`}
             })
         ])

@@ -3,6 +3,13 @@ import { IUpdateProfile } from "../../types/IUpdateProfile";
 import deleteEmptyProps from "../../utils/helpers/removeEmptyFields";
 
 class ProfileHandlers {
+    async get_profile(access_token: string) {
+        const res = await instance.get(`/profile/`, {
+            headers: {"Authorization": `Bearer ${access_token}`}
+        })
+
+        return res.data
+    }
     async create_profile(firstname: string, surname: string, access_token: string): Promise<any> {
         const res = await instance.post("profile/create", {
             firstname,
@@ -27,8 +34,8 @@ class ProfileHandlers {
 
         return res.data
     }
-    async update_photos(formData: any, access_token: string): Promise<any> {
-       const res = await instance.patch("profile/update/images", 
+    async update_photos(formData: any, access_token: string, profile_id: number): Promise<any> {
+       const res = await instance.patch(`profile/add_images/${profile_id}`, 
         formData
         , {
         headers: {
@@ -39,8 +46,8 @@ class ProfileHandlers {
 
        return res.data
     }
-    async delete_photos(filenames: string[], access_token: string): Promise<any> {
-        const res = await instance.post("profile/delete/images", filenames, {
+    async delete_photos(filenames: string[], access_token: string, profile_id: number): Promise<any> {
+        const res = await instance.patch(`profile/erase_images/${profile_id}`, filenames, {
             headers: {"Authorization": `Bearer ${access_token}`}
         })
 

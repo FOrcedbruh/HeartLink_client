@@ -66,24 +66,24 @@ const Profile: React.FC = () => {
         localStorage.clear()
         //@ts-ignore
         setAuthUser(null)
-        await AHandlers.logout()
         navigate("/")
     }
 
     const deleteImagesHandler = async (filename: string) => {
 
         const filenames: string[] = [filename]
-        const res = await PHandlers.delete_photos(filenames, access_token)
-
-        if (res.status === 200) {
+        let res;
+        try {
+            res = await PHandlers.delete_photos(filenames, access_token, profile?.id!)
+        } catch(e) {
+            setMessage(`Ошибка на сервере: ${e}`)
+        } finally {
             setMessage(res.message)
             localStorage.removeItem("auser")
             const data = await AHandlers.me(access_token)
             //@ts-ignore
             setAuthUser(data)
             localStorage.setItem("auser", JSON.stringify(data))
-        } else {
-            setMessage("Ошибка на сервере")
         }
     }
 
@@ -108,7 +108,7 @@ const Profile: React.FC = () => {
                 {logoutConfirm && <ConfirmModal confirmBtnText='Выйти' variant={ConfirmVariantEnum.primary} text='выйти из аккаунта' confirmFn={logout} onClose={setLogoutConfirm}/>}
             </AnimatePresence>
             <AnimatePresence>
-                {modalOpen && <ModalFiles modalOpen={modalOpen} access_token={access_token} setModalOpen={setModalOpen}/>}
+                {modalOpen && <ModalFiles modalOpen={modalOpen} profile_id={profile?.id!} access_token={access_token} setModalOpen={setModalOpen}/>}
             </AnimatePresence>
             {profile && <h1 className={styles.firstname}>{profile.firstname}</h1>}
             <div className={styles.userData}>

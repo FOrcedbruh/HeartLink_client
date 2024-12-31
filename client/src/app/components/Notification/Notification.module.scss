@@ -5,7 +5,7 @@
     justify-content: start;
     align-items: start;
     flex-direction: column;
-    z-index: 0;
+    z-index: 100;
     div.message {
         background-color: #8576FF;
         padding: 10px 20px;
@@ -19,6 +19,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        position: absolute
+        position: fixed;
+        z-index: 100;
     }
 }

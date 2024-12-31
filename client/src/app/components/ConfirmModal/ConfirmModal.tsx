@@ -23,6 +23,7 @@ interface ConfirmModalPropsType {
 
 const ConfirmModal: React.FC<ConfirmModalPropsType> = ({ variant, text, confirmFn, confirmBtnText, onClose }) => {
 
+    
     return (
         <motion.section exit={{ opacity: 0}} className={styles.modal}>
             <motion.div initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} exit={{opacity: 0, y: 20}}>

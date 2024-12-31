@@ -14,10 +14,11 @@ import { useAuthContext } from '../../../../api/auth/authContext'
 interface ModalPropsType {
     setModalOpen: Dispatch<SetStateAction<boolean>>,
     access_token: string,
-    modalOpen: boolean
+    modalOpen: boolean,
+    profile_id: number
 }
 
-const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token, modalOpen }) => {
+const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token, profile_id }) => {
 
     const { setMessage } = useMessage()
     const [isLoading, setIsloading] = useState<boolean>(false)
@@ -45,11 +46,11 @@ const ModalFiles: React.FC<ModalPropsType> = ({ setModalOpen, access_token, moda
         let res = null
         try {
             setIsloading(true)
-            res = await PHandlers.update_photos(formData, access_token)
+            res = await PHandlers.update_photos(formData, access_token, profile_id)
         } catch (e) {
             setMessage(res.detail)
         } finally {
-            setMessage(res.detail)
+            setMessage(res.message)
             localStorage.removeItem("auser")
             const data = await AHandlers.me(access_token)
             //@ts-ignore

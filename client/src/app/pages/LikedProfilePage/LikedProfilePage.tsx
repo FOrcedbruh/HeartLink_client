@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import styles from './LikedProfilePage.module.scss'
-import { LHandlers } from "../../../api/likes/handlers";
-import { useParams } from "react-router-dom";
+import { PHandlers } from "../../../api/profiles/handlers";
 import { IProfile } from "../../../types/IProfile";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Scrollbar } from "swiper/modules";
@@ -15,13 +14,14 @@ import { motion } from "framer-motion";
 
 const LikedProfilePage: FC = () => {
     
-    const { id: profile_id } = useParams()
     const [profile, setProfile] = useState<IProfile | null>(null)
+    const access_token: string | null = localStorage.getItem("access_token")
 
     const getProfile = async () => {
-        const res = await LHandlers.get_profile_by_like(profile_id!)
+        const res = await PHandlers.get_profile(access_token!)
+        console.log(res)
 
-        setProfile(res.profile)
+        setProfile(res)
     }
 
     const swiperRef = useRef<any>(null)
