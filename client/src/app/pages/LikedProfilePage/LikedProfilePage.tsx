@@ -1,11 +1,12 @@
 import { FC, useEffect, useRef, useState } from "react";
 import styles from './LikedProfilePage.module.scss'
-import { PHandlers } from "../../../api/profiles/handlers";
+import { LHandlers } from "../../../api/likes/handlers";
 import { IProfile } from "../../../types/IProfile";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Scrollbar } from "swiper/modules";
 import { setEndAge } from "../../../utils/utils";
 import { Hobby, HobbyStatus } from "../../components/Hobby/Hobby";
+import { useParams } from "react-router-dom";
 import "swiper/scss";
 import 'swiper/scss/effect-fade';
 import 'swiper/scss/scrollbar';
@@ -13,12 +14,14 @@ import { motion } from "framer-motion";
 
 
 const LikedProfilePage: FC = () => {
+
+    const {id: profile_id} = useParams()
     
     const [profile, setProfile] = useState<IProfile | null>(null)
     const access_token: string | null = localStorage.getItem("access_token")
 
     const getProfile = async () => {
-        const res = await PHandlers.get_profile(access_token!)
+        const res = await LHandlers.get_profile_by_like(Number(profile_id), access_token!)
         console.log(res)
 
         setProfile(res)

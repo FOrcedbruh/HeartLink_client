@@ -56,7 +56,7 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
 
     const like = async () => {
         if (!islikeSetted.current) {
-            await LHandlers.like(auth_profile_id, profile.id, access_token)
+            await LHandlers.like(auth_profile_id, profile.id)
             setCurrentUserIndex(currentUserIndex + 1)
             sliderRef.current.swiper.slideTo(0)
         }

@@ -12,14 +12,28 @@
     @media only screen and (max-width: 600px) {
         padding: 5px;
     }
-    h1.firstname {
-        font-weight: 200;
-        font-size: 34px;
-        padding: 0;
-        margin: 0;
+    div.avatar {
         align-self: flex-start;
-        font-family: "Quicksand", sans-serif;
-    }   
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        h1.firstname {
+            font-weight: 600;
+            font-size: 34px;
+            padding: 0;
+            margin: 0;
+            
+            font-family: "Quicksand", sans-serif;
+        }
+    }
+    
 
     .userData {
         display: flex;
@@ -182,6 +196,7 @@
             justify-content: center;
             align-items: center;
             background-color: #fff;
+            border: 2px solid #dfdfdf;
             border-radius: 20px;
 
             .next {

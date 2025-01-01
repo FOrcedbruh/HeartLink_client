@@ -53,8 +53,10 @@ class ProfileHandlers {
 
         return res.data
     }
-    async feed(gender_in: string): Promise<any> {
-        const res = await instance.post("profile/feed", gender_in)
+    async feed(gender_in: string, access_token: string, offset: number, limit: number): Promise<any> {
+        const res = await instance.post(`profile/feed/${offset}/${limit}`, gender_in, {
+            headers: {'Authorization': `Bearer ${access_token}`}
+        })
 
         return res.data
     }

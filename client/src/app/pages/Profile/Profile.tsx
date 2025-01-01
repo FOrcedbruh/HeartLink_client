@@ -110,7 +110,11 @@ const Profile: React.FC = () => {
             <AnimatePresence>
                 {modalOpen && <ModalFiles modalOpen={modalOpen} profile_id={profile?.id!} access_token={access_token} setModalOpen={setModalOpen}/>}
             </AnimatePresence>
-            {profile && <h1 className={styles.firstname}>{profile.firstname}</h1>}
+            {profile && 
+            <div className={styles.avatar}>
+                {profile.profileImages && <img src={profile.profileImages[0]} alt="avatar" />}
+                <h1 className={styles.firstname}>{profile.firstname}</h1>
+            </div>}
             <div className={styles.userData}>
                 {profile && <motion.div initial={{opacity: 0, y: 30}} transition={{duration: 0.7}} whileInView={{opacity: 1, y: 0}} className={styles.swiper_wrapper}>
                    {profile?.profileImages?.length > 0

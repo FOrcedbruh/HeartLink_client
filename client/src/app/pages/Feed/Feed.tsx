@@ -18,14 +18,20 @@ const Feed: React.FC = () => {
 
     const [currentUserIndex, setCurrentUserIndex] = useState<number>(0)
 
-    const getFeed = async () => {
-        if (authUser.profile.data.gender === "Мужчина") {
-            const res = await PHandlers.feed("MALE")
-            setProfiles(res.profiles)
+
+    const detect_gender = (gender: string): string => {
+        if (gender === "Мужчина") {
+            return "MALE"
         } else {
-            const res = await PHandlers.feed("FEMALE")
-            setProfiles(res.profiles)
+            return "FEMALE"
         }
+    }
+
+    const getFeed = async () => {
+        const gender_in: string = detect_gender(authUser.profile.data.gender)
+        const res = await PHandlers.feed(gender_in, access_token!, 0 , 10)
+
+        setProfiles(res)
     }
 
     useEffect(() => {
