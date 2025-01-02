@@ -27,7 +27,7 @@ const Layout: React.FC = () => {
 
     useEffect(() => {
         if (authUser) {
-            getLikes(authUser.profile.data?.id)
+            getLikes(authUser.profile.value?.data?.id)
         }
     }, [authUser])
 

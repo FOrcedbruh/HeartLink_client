@@ -139,7 +139,7 @@ const Card: React.FC<ICardProps> = ({ profile, setCurrentUserIndex, currentUserI
                <div className={styles.hobbies}>
                         {profile.hobbies.map(hobby => {
                             return (
-                                <Hobby key={hobby} status={HobbyStatus.primary} hobby={hobby}/>
+                                <Hobby key={hobby} status={HobbyStatus.secondary} hobby={hobby}/>
                             )
                         })}
                 </div>

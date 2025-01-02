@@ -10,10 +10,11 @@ class ProfileHandlers {
 
         return res.data
     }
-    async create_profile(firstname: string, surname: string, access_token: string): Promise<any> {
+    async create_profile(firstname: string, user_id: number, surname: string, access_token: string): Promise<any> {
         const res = await instance.post("profile/create", {
             firstname,
-            surname
+            surname,
+            user_id
         }, {headers: {"Authorization": `Bearer ${access_token}`}})
 
         return res.data

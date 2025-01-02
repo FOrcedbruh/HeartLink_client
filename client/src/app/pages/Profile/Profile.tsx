@@ -57,8 +57,8 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         if (authUser) {
-            setProfile(authUser.profile.data)
-            setUser(authUser.user.data)
+            setProfile(authUser.profile.value?.data)
+            setUser(authUser.user.value.data)
         }
     })
 

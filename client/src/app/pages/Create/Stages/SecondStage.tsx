@@ -10,10 +10,11 @@ interface SecondStagePropsType {
     stage: number,
     setStage: Dispatch<SetStateAction<number>>,
     setFirstname: Dispatch<SetStateAction<string>>,
-    access_token: string
+    access_token: string,
+    user_id: number
 }
 
-const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirstname, access_token }) => {
+const SecondStage: React.FC<SecondStagePropsType> = ({ user_id, stage, setStage, setFirstname, access_token }) => {
 
     interface FormStatetype {
         firstname: string,
@@ -33,8 +34,7 @@ const SecondStage: React.FC<SecondStagePropsType> = ({ stage, setStage, setFirst
     })
 
     const onSubmit = async (data: FormStatetype) => {
-        const res = await PHandlers.create_profile(data.firstname, data.surname, access_token)
-        console.log(res)
+        await PHandlers.create_profile(data.firstname, user_id, data.surname, access_token)
         setFirstname(data.firstname)
         reset()
         setStage(stage + 1)

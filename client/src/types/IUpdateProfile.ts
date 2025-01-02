@@ -5,5 +5,6 @@ export interface IUpdateProfile {
     age?: number,
     surname?: string,
     firstname?: string,
-    hobbies?: string[]
+    hobbies?: string[],
+    gender?: "MALE" | "FEMALE"
 }

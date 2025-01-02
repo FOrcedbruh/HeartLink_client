@@ -33,7 +33,7 @@ class AuthHandlers {
 
     async me(access_token: string): Promise<any> {
         try {
-            const [user, profile] = await Promise.all([
+            const [user, profile] = await Promise.allSettled([
                 instance.get("auth/users/me", {
                 headers: {"Authorization": `Bearer ${access_token}`}
             }),

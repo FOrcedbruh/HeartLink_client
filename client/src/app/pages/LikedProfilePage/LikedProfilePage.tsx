@@ -22,7 +22,6 @@ const LikedProfilePage: FC = () => {
 
     const getProfile = async () => {
         const res = await LHandlers.get_profile_by_like(Number(profile_id), access_token!)
-        console.log(res)
 
         setProfile(res)
     }
@@ -77,8 +76,8 @@ const LikedProfilePage: FC = () => {
                         })}
                    </div>
                     <div className={styles.btns}>
-                        <motion.button whileTap={{ borderRadius:0 }} whileHover={{ scale: 1.05 }} className={`${styles.btn} ${styles.dislike}`}>Не нравится</motion.button>
-                        <motion.button whileTap={{ borderRadius: 0 }} whileHover={{ scale: 1.05 }} className={`${styles.btn} ${styles.like}`}>Нравится</motion.button>
+                        <motion.button whileTap={{scale: 0.98}} whileHover={{ scale: 1.05, backgroundColor: "#8576FF", color: "#fff"}} className={`${styles.btn} ${styles.dislike}`}>Не нравится</motion.button>
+                        <motion.button whileTap={{scale: 0.98}} whileHover={{ scale: 1.05 }} className={`${styles.btn} ${styles.like}`}>Нравится</motion.button>
                     </div>
                 </div>
             </article>

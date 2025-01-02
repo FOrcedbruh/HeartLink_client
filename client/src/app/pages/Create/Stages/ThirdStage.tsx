@@ -3,6 +3,8 @@ import styles from './../CreateProfile.module.scss'
 import { Button } from "../../../components/Button/Button"
 import { motion } from "framer-motion"
 import { PHandlers } from "../../../../api/profiles/handlers"
+import { data } from "framer-motion/client"
+import { IUpdateProfile } from "../../../../types/IUpdateProfile"
 
 
 
@@ -17,7 +19,7 @@ interface ThirdStagePropsType {
 const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage, access_token}) => {
 
     const [age, setAge] = useState<number>(18)
-    const [gender, setGender] = useState<string>("MALE")
+    const [gender, setGender] = useState<"MALE" | "FEMALE">("MALE")
 
     const plusAge = () => {
         if (age < 100) {
@@ -31,8 +33,15 @@ const ThirdStage: React.FC<ThirdStagePropsType> = ({ stage, setStage, access_tok
         }
     }
 
+    
+
     const onSubmit = async () => {
-        const res = await PHandlers.update_gender_age(gender, age, access_token)
+        const data: IUpdateProfile = {
+            age: age,
+            gender: gender
+        }
+           
+        const res = await PHandlers.update_profile(access_token, data)
         console.log(res)
 
         setStage(stage + 1)

@@ -6,32 +6,31 @@ import { ILike } from '../../../types/ILike'
 import { replaceAll } from '../../../utils/utils'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { IProfile } from '../../../types/IProfile'
 
 
 const TITLE: string = 'Мне поставили отметки "нравится"'
 const BROKENHEART: string = "Пока тут пусто 💔"
 
 
-
-
-
 const LikesPage: FC = () => {
 
     const { authUser } = useAuthContext()
+    const profile: IProfile = authUser.profile.value?.data
 
     const [likes, setLikes] = useState<ILike[]>([])
 
     const navigate =  useNavigate()
 
-    const profile_id: number = authUser.profile.data.id
-
     const getLikes = async () => {
-        const res = await LHandlers.likes(profile_id)
+        const res = await LHandlers.likes(profile.id)
         setLikes(res)
     }
 
     useEffect(() => {
-        getLikes()
+        if (profile) {
+            getLikes()
+        }
     }, [])
 
     const variants = {
