@@ -33,13 +33,16 @@ const EditProfile: FC = () => {
 
 
     const { authUser, setAuthUser } = useAuthContext()
+    const profile: IProfile = authUser.profile.value?.data
+
+
     const [actionText, setActionText] = useState<string>("Потяните вправо, чтобы сохранить, влево, чтобы сбросить")
 
     const [passwordModal, setPasswordModal] = useState<boolean>(false)
     const [hobbiesModal, setHobbiesModal] = useState<boolean>(false)
 
     const [newPassword, setNewPassword] = useState<string>("")
-    const [newHobbies, setNewHobbies] = useState<string[]>(authUser.profile.data.hobbies)
+    const [newHobbies, setNewHobbies] = useState<string[]>(profile.hobbies)
 
     const x = useMotionValue<number>(0)
     const h2Color = useTransform(x, [-140, 0, 140], ["#D91656", "#eee", "#00FF9C"])
@@ -81,18 +84,17 @@ const EditProfile: FC = () => {
         mode: "onChange"
     })
 
-    const profile: IProfile = authUser.profile.data
-
 
     const onSubmit = async (data: IFormState) => {
         data["hobbies"] = newHobbies
-        const res = await PHandlers.update_profile(access_token!, data)
-        if (res.status === 200) {
+        try {
+            await PHandlers.update_profile(access_token!, data)
+        } catch(e) {
+            setMessage(`Ошибка обновления профиля: (${e})`)
+        } finally {
             setMessage("Профиль успешно обновлен")
-        } else {
-            setMessage("Ошибка обновления профиля")
+            reset()
         }
-        reset()
     }
 
 

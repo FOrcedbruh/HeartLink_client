@@ -6,6 +6,7 @@ import { PHandlers } from "../../../../api/profiles/handlers"
 import { getHobbies } from "../../../../api/hobbies/handlers"
 import { IHobby } from "../../../../types/IHobby"
 import { Hobby, HobbyStatus } from "../../../components/Hobby/Hobby"
+import { IUpdateProfile } from "../../../../types/IUpdateProfile"
 
 
 interface FourthStagePropsType {
@@ -59,7 +60,11 @@ const FourthStage: React.FC<FourthStagePropsType> = ({ stage, setStage, access_t
     }, [])
 
     const onSubmit = async () => {
-        const res = await PHandlers.update_bio_hobbies(bio, selectedHobbies, access_token)
+        const data: IUpdateProfile = {
+            hobbies: selectedHobbies,
+            bio
+        }
+        const res = await PHandlers.update_profile(access_token, data)
         console.log(res)
         setStage(stage + 1)
     }
